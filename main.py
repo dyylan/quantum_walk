@@ -41,15 +41,16 @@ def energy_0_and_energy_1(eigenvalues):
 
 def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0):
     fig, ax = plt.subplots()
-    for amp in amps:
-        ax.plot(gammasN, amp)
+    linestyles = ['solid', 'solid', 'dashed', 'dashed']
+    for i, amp in enumerate(amps):
+        ax.plot(gammasN, amp, linestyle=linestyles[i])
     ax.plot(gammasN, e1_minus_e0)
     ax.legend(['$|\langle m|\psi_0 \\rangle |^2$', 
                 '$|\langle m|\psi_1 \\rangle |^2$', 
                 '$|\langle s|\psi_0 \\rangle |^2$', 
                 '$|\langle s|\psi_1 \\rangle|^2$',
                 '$E_1 - E_0$'])
-    ax.set(xlabel='$\gamma  N$', ylabel='Amplitude')
+    ax.set(xlabel='$\gamma  N$')
     ax.grid()    
     plt.savefig(f'plots/alpha={alpha}_dim={dimensions}.png')
     plt.show()
@@ -58,18 +59,19 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0):
 if __name__ == "__main__":
     dimensions = 1024
     mark = 5
-    gamma = 2/dimensions
-    alpha = 1
+    gamma = 450/dimensions
+    alpha = 1.5
     number_of_points = 100
     gammas = [gamma*(i/number_of_points) for i in range(1,(number_of_points+1))]
     m_psi_0s = []
     s_psi_0s = []
     m_psi_1s = []
     s_psi_1s = []
-    e1_minus_e0s = []
+    e1_minus_e0s = []        
+    m_ket = marked_state(n=dimensions, marked=mark)
+    s_ket = superposition_state(n=dimensions)    
     for point, gamma in enumerate(gammas):
-        m_ket = marked_state(n=dimensions, marked=mark)
-        s_ket = superposition_state(n=dimensions)            
+        
         H = -gamma*dimensions*np.outer(s_ket, s_ket) - np.outer(m_ket, m_ket) 
         if alpha: 
             H = hamiltonian_matrix(n=dimensions, gamma=gamma, alpha=alpha, marked=mark)
@@ -85,18 +87,4 @@ if __name__ == "__main__":
     gammasN = [gamma * dimensions for gamma in gammas]
     amplitudes_plot(alpha, dimensions, gammasN, 
                     [m_psi_0s, m_psi_1s, s_psi_0s, s_psi_1s], e1_minus_e0s)
-    '''
-    print(times)
-    m_ket = marked_state(n=dimensions, marked=mark)
-    s_ket = superposition_state(n=dimensions)
-    print(m_ket)
-    print(s_ket)
-    H = hamiltonian_matrix(n=dimensions, gamma=gamma, alpha=alpha, marked=mark)
-    U = unitary_matrix(H, time=time)
-    U_s_ket = np.matmul(U, s_ket)
-    amplitude = np.dot(m_ket, U_s_ket)
-    print(H)
-    print(U)
-    print(amplitude)
-    '''
     
