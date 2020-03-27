@@ -59,8 +59,8 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0):
 if __name__ == "__main__":
     dimensions = 1024
     mark = 5
-    gamma = 450/dimensions
-    alpha = 1.5
+    gamma = 4000/dimensions
+    alpha = 3
     number_of_points = 100
     gammas = [gamma*(i/number_of_points) for i in range(1,(number_of_points+1))]
     m_psi_0s = []
@@ -71,7 +71,6 @@ if __name__ == "__main__":
     m_ket = marked_state(n=dimensions, marked=mark)
     s_ket = superposition_state(n=dimensions)    
     for point, gamma in enumerate(gammas):
-        
         H = -gamma*dimensions*np.outer(s_ket, s_ket) - np.outer(m_ket, m_ket) 
         if alpha: 
             H = hamiltonian_matrix(n=dimensions, gamma=gamma, alpha=alpha, marked=mark)
