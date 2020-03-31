@@ -91,7 +91,7 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
     plt.show()
 
 
-def overlaps_plot(times, overlaps, alpha, dimensions, save=False):
+def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False):
     norm_overlaps = np.multiply(np.conj(overlaps), overlaps)
     real_overlaps = np.real(overlaps)
     imag_overlaps = np.imag(overlaps)
@@ -100,22 +100,22 @@ def overlaps_plot(times, overlaps, alpha, dimensions, save=False):
     linestyles = ['dashed', 'dashed', 'solid']
     for i, y in enumerate(ys):
         ax.plot(times, y, linestyle=linestyles[i])
-    ax.legend(['$Re(\langle m| H |s\\rangle)$',
-                '$Im(\langle m| H |s\\rangle)$',
-                '$|\langle m| H |s\\rangle|^2$'])
-    ax.set(xlabel='$time$')
+    ax.legend(['$Re(\langle m| U |s\\rangle)$',
+                '$Im(\langle m| U |s\\rangle)$',
+                '$|\langle m| U |s\\rangle|^2$'])
+    ax.set(xlabel='$time~(\hbar s)$')
     ax.grid() 
-    if save:   
-        plt.savefig(f'plots/overlaps_alpha={alpha}_N={dimensions}.png')
+    if save:
+        plt.savefig(f'plots/overlaps_alpha={alpha}_gammaN={gammaN}_N={dimensions}.png')
     plt.show()
 
 
 if __name__ == "__main__":
     dimensions = 1024
     mark = 5
-    gamma = 2/dimensions
-    alpha = 0
-    number_of_points = 10 
+    gamma = 180/dimensions
+    alpha = 1
+    number_of_points = 100
     m_ket = marked_state(n=dimensions, marked=mark)
     s_ket = superposition_state(n=dimensions) 
 
@@ -125,12 +125,19 @@ if __name__ == "__main__":
                                                             gamma, alpha, 
                                                             number_of_points) 
 
+
+    #~~~ Optimum gamma N
+    opt_gammaN = gammasN[np.argmin(e1_minus_e0s)]
+    print(f'optimum gammaN value is {opt_gammaN}')
+
+
     #~~~ Unitary evolution
-    H_alpha_0 = hamiltonian_matrix(n=dimensions, gamma=(1/dimensions), alpha=0, marked=mark)
-    times, overlaps = unitary_evolution(H_alpha_0, s_ket, m_ket, 100, 0.5)
+    #opt_gammaN = 80.0
+    H_alpha_0 = hamiltonian_matrix(n=dimensions, gamma=(opt_gammaN/dimensions), alpha=1, marked=mark)
+    times, overlaps = unitary_evolution(H_alpha_0, s_ket, m_ket, 200, 0.5)
     
 
     #~~~ Plots
-    #amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save=False)    
-    overlaps_plot(times, overlaps, alpha=alpha, dimensions=dimensions, save=True)
+    amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save=False)
+    overlaps_plot(times, overlaps, alpha=alpha, gammaN=opt_gammaN, dimensions=dimensions, save=True)
 
