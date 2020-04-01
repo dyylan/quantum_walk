@@ -3,6 +3,17 @@ import scipy.linalg
 import matplotlib.pyplot as plt
 
 
+parameters = {
+    'dimensions'          : 1024,
+    'marked_state'        : 5,
+    'start_gammaN'        : 1,
+    'end_gammaN'          : 2,
+    'alpha'               : 0,
+    'number_of_points'    : 20,
+    'save_plots'          : False
+}
+
+
 def hamiltonian_matrix(n, gamma=1, alpha=0, marked=1):
     H_matrix = -gamma*np.array([[(1/(np.abs(col-row)))**(alpha) if col != row else 1 
                                     for col in range(n)] 
@@ -49,7 +60,7 @@ def unitary_evolution(hamiltonian, initial_state, target_state, end_time, dt):
     return times, overlaps
 
 
-def eigenstate_m_and_s_overlap(s_ket, m_ket, dimensions, mark, gamma, alpha, number_of_points):
+def eigenstate_m_and_s_overlap(s_ket, m_ket, dimensions, mark, gamma, alpha, number_of_points, start_gamma=0):
     gammas = [gamma*(i/number_of_points) for i in range(1,(number_of_points+1))]
     m_psi_0s = []
     s_psi_0s = []
@@ -87,7 +98,7 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
     ax.set(xlabel='$\gamma  N$')
     ax.grid()
     if save: 
-        plt.savefig(f'plots/alpha={alpha}_dim={dimensions}.png')
+        plt.savefig(f'plots/amplitudes/alpha={alpha}_dim={dimensions}.png')
     plt.show()
 
 
@@ -106,7 +117,7 @@ def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False):
     ax.set(xlabel='$time~(\hbar s)$')
     ax.grid() 
     if save:
-        plt.savefig(f'plots/overlaps_alpha={alpha}_gammaN={gammaN}_N={dimensions}.png')
+        plt.savefig(f'plots/overlaps/overlaps_alpha={alpha}_gammaN={gammaN}_N={dimensions}.png')
     plt.show()
 
 
@@ -115,7 +126,7 @@ if __name__ == "__main__":
     mark = 5
     gamma = 180/dimensions
     alpha = 1
-    number_of_points = 100
+    number_of_points = 1000
     m_ket = marked_state(n=dimensions, marked=mark)
     s_ket = superposition_state(n=dimensions) 
 
@@ -138,6 +149,6 @@ if __name__ == "__main__":
     
 
     #~~~ Plots
-    amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save=False)
+    amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save=True)
     overlaps_plot(times, overlaps, alpha=alpha, gammaN=opt_gammaN, dimensions=dimensions, save=True)
 
