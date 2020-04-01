@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt 
-
+import numpy as np
 
 def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
     fig, ax = plt.subplots()

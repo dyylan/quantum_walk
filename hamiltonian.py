@@ -32,8 +32,9 @@ class Hamiltonian:
     def s_ket(self):
         return self._s_ket.ket
     
-    def unitary_evolution(self, initial_state, end_time, dt=None):
-        if not dt:
+    def unitary_evolution(self, end_time, dt=None, initial_state=None):
+        initial_state = self.s_ket if not initial_state else initial_state
+        if dt:
             times = [dt*interval for interval in range(int(np.ceil(end_time/dt)))]
             states = [np.matmul(self._unitary_matrix(time), initial_state)
                                                                 for time in times]
