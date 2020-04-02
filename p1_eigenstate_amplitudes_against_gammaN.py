@@ -1,5 +1,5 @@
 import numpy as np
-from main import parameters
+from main import p1_parameters
 from plots import amplitudes_plot
 from hamiltonian import Hamiltonian
 
@@ -24,18 +24,21 @@ def main(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
 
 
 if __name__ == "__main__":
-    dimensions = parameters['dimensions']
-    marked_state = parameters['marked_state']
-    start_gamma = parameters['start_gammaN']/dimensions
-    end_gamma = parameters['end_gammaN']/dimensions
-    alpha = parameters['alpha']                                            
-    number_of_points = parameters['number_of_points'] 
-    save_plots = parameters['save_plots'] 
+    # Parameters
+    dimensions = p1_parameters['dimensions']
+    marked_state = p1_parameters['marked_state']
+    start_gamma = p1_parameters['start_gammaN']/dimensions
+    end_gamma = p1_parameters['end_gammaN']/dimensions
+    alpha = p1_parameters['alpha']                                            
+    number_of_points = p1_parameters['number_of_points'] 
+    save_plots = p1_parameters['save_plots'] 
 
+    # Eigenstate amplitudes
     gammasN, amps, e1_minus_e0s = main(dimensions, marked_state, start_gamma, 
                                         end_gamma, alpha, number_of_points)
 
     opt_gammaN = gammasN[np.argmin(e1_minus_e0s)]
     print(f'optimum gammaN value is {opt_gammaN}')
 
+    # Plot
     amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save_plots)

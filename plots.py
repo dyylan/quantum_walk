@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt 
 import numpy as np
 
+
 def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
     fig, ax = plt.subplots()
     linestyles = ['solid', 'solid', 'dashed', 'dashed']
@@ -15,7 +16,7 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
     ax.set(xlabel='$\gamma  N$')
     ax.grid()
     if save: 
-        plt.savefig(f'plots/amplitudes/alpha={alpha}_dim={dimensions}.png')
+        plt.savefig(f'plots/p1/alpha={alpha}_dim={dimensions}.png')
     plt.show()
 
 
@@ -31,8 +32,8 @@ def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False):
     ax.legend(['$Re(\langle m| U |s\\rangle)$',
                 '$Im(\langle m| U |s\\rangle)$',
                 '$|\langle m| U |s\\rangle|^2$'])
-    ax.set(xlabel='$time~(\hbar s)$')
+    ax.set(xlabel='$time~(s/\hbar)$')
     ax.grid() 
     if save:
-        plt.savefig(f'plots/overlaps/overlaps_alpha={alpha}_gammaN={gammaN}_N={dimensions}.png')
+        plt.savefig(f'plots/p2/overlaps_alpha={alpha}_gammaN={gammaN}_N={dimensions}.png')
     plt.show()
