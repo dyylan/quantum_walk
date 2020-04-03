@@ -14,7 +14,7 @@ def p4(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, step_N=1
         gamma = lookup_gamma(opt_gammaNs, N)
         times, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step)
         marked_probability = np.abs(np.multiply(np.conj(marked_amplitude), marked_amplitude))
-        peaks, _ = find_peaks(marked_probability, height=(0.4, 1.05))
+        peaks, _ = find_peaks(marked_probability, height=(0.3, 1.05))
         opt_time = times[peaks[0]]
         opt_times.append(opt_time)
         print(f'Computed unitary time of {opt_time} for {N} dimensions (up to {end_N}) '
