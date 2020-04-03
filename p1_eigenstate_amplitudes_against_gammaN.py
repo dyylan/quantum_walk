@@ -4,7 +4,7 @@ from plots import amplitudes_plot
 from hamiltonian import Hamiltonian
 
 
-def main(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
+def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
     gammas = np.linspace(start_gamma, end_gamma, number_of_points)
     m_psi_0s = []
     s_psi_0s = []
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     save_plots = p1_parameters['save_plots'] 
 
     # Eigenstate amplitudes
-    gammasN, amps, e1_minus_e0s = main(dimensions, marked_state, start_gamma, 
+    gammasN, amps, e1_minus_e0s = p1(dimensions, marked_state, start_gamma, 
                                         end_gamma, alpha, number_of_points)
 
     opt_gammaN = gammasN[np.argmin(e1_minus_e0s)]

@@ -4,7 +4,7 @@ from plots import overlaps_plot
 from hamiltonian import Hamiltonian
 
 
-def main(dimensions, gamma, alpha, marked, end_time, time_step):
+def p2(dimensions, gamma, alpha, marked, end_time, time_step):
     H = Hamiltonian(dimensions, gamma, alpha, marked)
     states, times = H.unitary_evolution(end_time, time_step)
     overlaps = [np.vdot(H.m_ket, state) for state in states]
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     gamma = optimum_gammaN/dimensions
 
     # State probability over time
-    times, overlaps = main(dimensions, gamma, alpha, marked_state, end_time, time_step)
+    times, overlaps = p2(dimensions, gamma, alpha, marked_state, end_time, time_step)
 
     # Plot
     overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, save_plots)

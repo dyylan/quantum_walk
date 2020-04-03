@@ -44,7 +44,7 @@ class Hamiltonian:
             return state, end_time
 
     def _hamiltonian_matrix(self):
-        if True: #if self.alpha:                      
+        if self.alpha:                      
             H = -self.gamma*np.array([[(1/((np.abs(col-row))**(self.alpha))) if col != row else 1 
                                                 for col in range(self.dimensions)] 
                                                     for row in range(self.dimensions)]) 
@@ -55,7 +55,6 @@ class Hamiltonian:
         return H
 
     def _unitary_matrix(self, time):
-        print(f'Computing hamiltonian at time: {time}')
         return scipy.linalg.expm(-1j*self.H_matrix*time)
 
     def _psi_0_and_psi_1(self):
