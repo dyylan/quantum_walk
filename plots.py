@@ -23,7 +23,7 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
 
 
 def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False):
-    norm_overlaps = np.multiply(np.conj(overlaps), overlaps)
+    norm_overlaps = np.abs(np.multiply(np.conj(overlaps), overlaps))
     real_overlaps = np.real(overlaps)
     imag_overlaps = np.imag(overlaps)
     ys = [real_overlaps, imag_overlaps, norm_overlaps]

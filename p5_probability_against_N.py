@@ -13,7 +13,7 @@ def p5(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, step_N=1
     for N in dimensions:
         gamma = lookup_gamma(opt_gammaNs, N)
         _, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step)
-        marked_probability = np.multiply(np.conj(marked_amplitude), marked_amplitude)
+        marked_probability = np.abs(np.multiply(np.conj(marked_amplitude), marked_amplitude))
         peaks, _ = find_peaks(marked_probability, height=(0.7, 1.05))
         max_prob = marked_probability[peaks[0]]
         max_probs.append(max_prob)

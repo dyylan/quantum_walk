@@ -62,7 +62,7 @@ p5_parameters = {
     'marked_state'        : marked_state,
     'alpha'               : alpha,
     'start_dimensions'    : 64,
-    'end_dimensions'      : 128,
+    'end_dimensions'      : 1760,
     'step_dimensions'     : 32,
     'end_time'            : 200,
     'time_step'           : 1,
