@@ -40,6 +40,7 @@ p3_parameters = {
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
     'step_dimensions'     : 32,
+    # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
     'optimum_gammaNs'     : 1.0, #f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
     'save_plots'          : True
 }
@@ -53,6 +54,7 @@ p4_parameters = {
     'step_dimensions'     : 32,
     'end_time'            : 200,
     'time_step'           : 1,
+    # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
     'optimum_gammaNs'     : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
     'save_plots'          : True
 }
@@ -66,6 +68,7 @@ p5_parameters = {
     'step_dimensions'     : 32,
     'end_time'            : 200,
     'time_step'           : 1,
+    # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
     'optimum_gammaNs'     : 1.0, #f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
     'save_plots'          : True
 }
