@@ -32,11 +32,11 @@ class Hamiltonian:
     def s_ket(self):
         return self._s_ket.ket
     
-    def unitary_evolution(self, end_time, dt=None, initial_state=None):
+    def unitary_evolution(self, end_time, dt=None, print_status=False, initial_state=None):
         initial_state = self.s_ket if not initial_state else initial_state
         if dt:
             times = [dt*interval for interval in range(int(np.ceil(end_time/dt)))]
-            states = [np.matmul(self._unitary_matrix(time), initial_state)
+            states = [np.matmul(self._unitary_matrix(time, print_status), initial_state)
                                                                 for time in times]
             return states, times 
         else: 
@@ -54,7 +54,9 @@ class Hamiltonian:
                     np.outer(self.m_ket, self.m_ket) 
         return H
 
-    def _unitary_matrix(self, time):
+    def _unitary_matrix(self, time, print_status=False):
+        if print_status:
+            print(f'Computing unitary evolution at time: {time}')
         return scipy.linalg.expm(-1j*self.H_matrix*time)
 
     def _psi_0_and_psi_1(self):
