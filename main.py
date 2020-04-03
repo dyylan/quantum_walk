@@ -44,6 +44,7 @@ p3_parameters = {
     'save_plots'          : True
 }
 
+
 p4_parameters = {
     'marked_state'        : marked_state,
     'alpha'               : alpha,
@@ -53,5 +54,18 @@ p4_parameters = {
     'end_time'            : 200,
     'time_step'           : 1,
     'optimum_gammaNs'     : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
+    'save_plots'          : True
+}
+
+
+p5_parameters = {
+    'marked_state'        : marked_state,
+    'alpha'               : alpha,
+    'start_dimensions'    : 64,
+    'end_dimensions'      : 128,
+    'step_dimensions'     : 32,
+    'end_time'            : 200,
+    'time_step'           : 1,
+    'optimum_gammaNs'     : 1.0, #f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
     'save_plots'          : True
 }

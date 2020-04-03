@@ -19,8 +19,16 @@ def read_optimum_gammaNs(filepath, index):
     return dataframe[['optimum_gammaNs']]
 
 
+def check_optimum_gammaNs_parameter_type(optimum_gammaNs):
+    if isinstance(optimum_gammaNs, str):
+        opt = read_optimum_gammaNs(optimum_gammaNs, 'dimensions')
+    else:
+        opt = float(optimum_gammaNs)
+    return opt
+
+
 def lookup_gamma(opt_gammaNs, N):
-    if isinstance(opt_gammaNs, int):
+    if isinstance(opt_gammaNs, float):
         gamma = opt_gammaNs/N 
     else:
         gamma = opt_gammaNs.loc[N, 'optimum_gammaNs']/N

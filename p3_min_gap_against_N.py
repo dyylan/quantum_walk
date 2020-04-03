@@ -3,7 +3,7 @@ import pandas as pd
 from main import p3_parameters
 from plots import p3_min_gap_against_N_plot
 from hamiltonian import Hamiltonian
-from optimum_gammaNs import read_optimum_gammaNs, lookup_gamma
+from optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
  
 
 def p3(start_N, end_N, opt_gammaNs, alpha, marked, step_N=1):
@@ -29,10 +29,7 @@ if __name__ == "__main__":
     optimum_gammaNs = p3_parameters['optimum_gammaNs']
     save_plots = p3_parameters['save_plots'] 
 
-    if isinstance(optimum_gammaNs, str):
-        optimum_gammaNs = read_optimum_gammaNs(optimum_gammaNs, 'dimensions')
-    else:
-        optimum_gammaNs = int(optimum_gammaNs)
+    optimum_gammaNs = check_optimum_gammaNs_parameter_type(optimum_gammaNs)
 
     # Minimum gaps against dimensions
     dimensions, min_gaps = p3(start_N, end_N, optimum_gammaNs, alpha, marked_state, step_N)

@@ -72,7 +72,7 @@ def p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, gammaN, save=False):
 def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False):
     
     popt, pcov = curve_fit(fits.power_fit, dimensions, times, bounds=(0, [10., 1., 1.]))
-    print(f'Fit for inverse power gives: y = {popt[0]} * x^{popt[1]} + {popt[2]}')
+    print(f'Fit for power gives: y = {popt[0]} * x^{popt[1]} + {popt[2]}')
 
     sqrt_N_fit = fits.power_fit(dimensions, popt[0], 0.5, popt[2])
 
@@ -94,4 +94,27 @@ def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False):
     ax.grid() 
     if save:
         plt.savefig(f'plots/p4/times_alpha={alpha}.png')
+    plt.show()
+
+
+def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, save=False):
+    
+    hundred_percent = [1 for _ in range(len(probabilities))]
+    ninety_percent = [0.9 for _ in range(len(probabilities))]
+    eighty_percent = [0.8 for _ in range(len(probabilities))]
+
+    ys = [probabilities, hundred_percent, ninety_percent, eighty_percent]
+    
+    fig, ax = plt.subplots()
+    linestyles = ['solid', 'dashed', 'dashed', 'dashed']
+    for i, y in enumerate(ys):
+        ax.plot(dimensions, y, linestyle=linestyles[i])
+    ax.legend(['$fidelity$',
+                '$100\%$',
+                '$90\%$',
+                '$80\%$'])
+    ax.set(xlabel='$N$')
+    ax.grid() 
+    if save:
+        plt.savefig(f'plots/p5/times_alpha={alpha}.png')
     plt.show()

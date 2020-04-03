@@ -4,7 +4,7 @@ from scipy.signal import find_peaks
 from main import p4_parameters
 from plots import p4_time_against_N_plot
 from p2_marked_state_probability_against_time import p2
-from optimum_gammaNs import read_optimum_gammaNs, lookup_gamma
+from optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
 
 
 def p4(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, step_N=1):
@@ -14,7 +14,6 @@ def p4(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, step_N=1
         gamma = lookup_gamma(opt_gammaNs, N)
         times, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step)
         marked_probability = np.multiply(np.conj(marked_amplitude), marked_amplitude)
-        #opt_time = times[np.argmax(marked_probability)]
         peaks, _ = find_peaks(marked_probability, height=(0.7, 1.05))
         opt_time = times[peaks[0]]
         opt_times.append(opt_time)
@@ -34,8 +33,7 @@ if __name__ == "__main__":
     optimum_gammaNs = p4_parameters['optimum_gammaNs']
     save_plots = p4_parameters['save_plots']
 
-    if isinstance(optimum_gammaNs, str):
-        optimum_gammaNs = read_optimum_gammaNs(optimum_gammaNs, 'dimensions')
+    optimum_gammaNs = check_optimum_gammaNs_parameter_type(optimum_gammaNs)
 
     # Minimum gaps against dimensions
     dimensions, opt_times = p4(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, step_N)
