@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from hamiltonian import Hamiltonian
-from optimum_gammaNs import lookup_gamma, optimum_gammaN, read_optimum_gammaNs
+from optimum_gammaNs import check_optimum_gammaNs_parameter_type, lookup_gamma, optimum_gammaN
 
 
 parameters = {
@@ -10,8 +10,8 @@ parameters = {
     'step_dimensions'     : 32,
     'marked_state'        : 5,                     
     'alpha'               : 1,
-    'gammaN_range'        : 1, 
-    'number_of_points'    : 100,
+    'gammaN_range'        : 1,
+    'number_of_points'    : 1,
 }
 
 
@@ -24,21 +24,24 @@ if __name__ == "__main__":
     gammaN_range = parameters['gammaN_range']
     number_of_points = parameters['number_of_points'] 
 
+    centre_gammaNs_csv = f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv'
+    centre_gammaNs = check_optimum_gammaNs_parameter_type(centre_gammaNs_csv)
+    
     dimensions = list(range(start_N, end_N+1, step_N))
 
     optimum_gammaNs = []
     start_gammaNs = []
     end_gammaNs = []
     for N in dimensions:
-        gammaN = lookup_gamma(opt_gammaNs, N) * N
-        start_gammaN = gammaN - (gammaN_range/2)
-        end_gammaN = gammaN + (gammaN_range/2)
+        centre_gammaN = lookup_gamma(centre_gammaNs, N) * N
+        start_gammaN = centre_gammaN - (gammaN_range/2)
+        end_gammaN = centre_gammaN + (gammaN_range/2)
         opt_gammaN = optimum_gammaN(N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
         optimum_gammaNs.append(opt_gammaN)
         start_gammaNs.append(start_gammaN)
         end_gammaNs.append(end_gammaN)
-        print(f'Computed optimum gammaN of {opt_gammaN} for {N} dimensions (up to {end_N}) '
-              f'with start_gammaN = {start_gammaN} and end_gammaN = {end_gammaN}')
+        print(f'--> Computed optimum gammaN of {opt_gammaN} for {N} dimensions (up to {end_N})'
+              f'\n\t\twith start_gammaN = {start_gammaN} and end_gammaN = {end_gammaN}')
 
     optimum_gammaNs_data = {
         'dimensions'            : dimensions,
