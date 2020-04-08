@@ -116,5 +116,5 @@ def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, save
     ax.set(xlabel='$N$')
     ax.grid() 
     if save:
-        plt.savefig(f'plots/p5/times_alpha={alpha}.png')
+        plt.savefig(f'plots/p5/probs_alpha={alpha}.png')
     plt.show()
