@@ -4,7 +4,7 @@ import fits
 from scipy.optimize import curve_fit
 
 
-def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
+def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False, lattice_d=1):
     fig, ax = plt.subplots()
     linestyles = ['solid', 'solid', 'dashed', 'dashed']
     for i, amp in enumerate(amps):
@@ -18,7 +18,7 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False):
     ax.set(xlabel='$\gamma  N$')
     ax.grid()
     if save: 
-        plt.savefig(f'plots/p1/alpha={alpha}_dim={dimensions}.png')
+        plt.savefig(f'plots/p1/alpha={alpha}_lat_dim={lattice_d}_dim={dimensions}.png')
     plt.show()
 
 

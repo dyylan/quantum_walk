@@ -5,17 +5,21 @@ from ket import Ket
 
 class Hamiltonian:
 
-    def __init__(self, dimensions, gamma, alpha, marked_state):
+    def __init__(self, dimensions, gamma, alpha, marked_state, lattice_d=1):
         """Initialises a hamiltonian with the form of a spatial quantum walk
         with a 1/|i-j|^alpha potential drop-off.
         """
+        self.lattice_d = lattice_d
         self.dimensions = dimensions
         self.gamma = gamma
         self.alpha = alpha
         self.marked = marked_state
         self._m_ket = Ket(dimensions, 'm', marked_state)
         self._s_ket = Ket(dimensions, 's')
-        self.H_matrix = self._hamiltonian_matrix()
+        if lattice_d == 1:
+            self.H_matrix = self._hamiltonian_matrix()
+        elif lattice_d == 2:
+            self.H_matrix = self._2d_hamiltonian_matrix()
         self.eigenvectors, self.eigenvalues = Hamiltonian.eigenvectors_eigenvalues(self.H_matrix)
         self.psi_0, self.psi_1 = self._psi_0_and_psi_1()
         self.energy_0, self.energy_1 = self._energy_0_and_energy_1()
@@ -52,6 +56,15 @@ class Hamiltonian:
         else:
             H = -self.gamma*self.dimensions*np.outer(self.s_ket, self.s_ket) - \
                     np.outer(self.m_ket, self.m_ket) 
+        return H
+
+    def _2d_hamiltonian_matrix(self):
+        def coef(i, j, k, l):
+            return 1/(((i-k)**2 + (j-l)**2)**(self.alpha/2))
+        n = range(int(self.dimensions**(1/self.lattice_d)))
+        H = [[coef(i,j,k,l) if not (i==k and j==l) else 1 for k in n for l in n] for i in n for j in n]
+        H = -self.gamma*np.array(H)
+        H[(self.marked-1, self.marked-1)] = H[(self.marked-1, self.marked-1)] - 1
         return H
 
     def _unitary_matrix(self, time, print_status=False):
