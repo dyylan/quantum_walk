@@ -17,13 +17,14 @@ parameters = {
 
 
 if __name__ == "__main__":
+    lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
     step_N = parameters['step_dimensions']
     marked_state = parameters['marked_state']
     alpha = parameters['alpha']                             
     gammaN_range = parameters['gammaN_range']
-    number_of_points = parameters['number_of_points'] 
+    number_of_points = parameters['number_of_points']
 
     centre_gammaNs_csv = f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv'
     centre_gammaNs = check_optimum_gammaNs_parameter_type(centre_gammaNs_csv)
