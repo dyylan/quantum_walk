@@ -3,12 +3,25 @@ import pandas as pd
 from hamiltonian import Hamiltonian
 
 
-def optimum_gammaN(dimensions, start_gammaN, end_gammaN, mark, alpha, number_of_points):
+parameters = {
+    'lattice_dimensions'  : 2,
+    'start_dimensions'    : 64,
+    'end_dimensions'      : 1600,
+    'step_dimensions'     : 32,
+    'marked_state'        : 5,                     
+    'alpha'               : 1,
+    'start_gammaN'        : 0.1, 
+    'end_gammaN'          : 20,
+    'number_of_points'    : 200,
+}
+
+
+def optimum_gammaN(lattice_d, dimensions, start_gammaN, end_gammaN, mark, alpha, number_of_points):
     gammaNs = np.linspace(start_gammaN, end_gammaN, number_of_points)
     e1_minus_e0s = []        
     for gammaN in gammaNs:
         gamma = gammaN/dimensions
-        H = Hamiltonian(dimensions, gamma, alpha, mark)
+        H = Hamiltonian(dimensions, gamma, alpha, mark, lattice_d)
         e1_minus_e0s.append(H.energy_1 - H.energy_0)
     opt_gammaN = gammaNs[np.argmin(e1_minus_e0s)]
     return opt_gammaN
@@ -35,19 +48,13 @@ def lookup_gamma(opt_gammaNs, N):
     return gamma
 
 
-parameters = {
-    'start_dimensions'    : 64,
-    'end_dimensions'      : 1760,
-    'step_dimensions'     : 32,
-    'marked_state'        : 5,                     
-    'alpha'               : 1,
-    'start_gammaN'        : 4, 
-    'end_gammaN'          : 400,
-    'number_of_points'    : 100,
-}
+def is_square(integer):
+    root = np.sqrt(integer)
+    return integer == int(root + 0.5) ** 2
 
 
 if __name__ == "__main__":
+    lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
     step_N = parameters['step_dimensions']
@@ -57,17 +64,24 @@ if __name__ == "__main__":
     end_gammaN = parameters['end_gammaN']
     number_of_points = parameters['number_of_points'] 
 
-    dimensions = list(range(start_N, end_N+1, step_N))
+    if lattice_d == 1:
+        dimensions = list(range(start_N, end_N+1, step_N))
+    elif lattice_d == 2:
+        if is_square(start_N) and is_square(end_N):
+            dimensions = [x**2 for x in range(int(np.sqrt(start_N)), int(np.sqrt(end_N))+1, 1)]
+        else:
+            raise ValueError('Start dimensions and end dimensions must be '
+                             'square numbers for lattice dimension of 2.') 
 
     optimum_gammaNs = []
     start_gammaNs = []
     end_gammaNs = []
     for N in dimensions:
-        opt_gammaN = optimum_gammaN(N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
+        opt_gammaN = optimum_gammaN(lattice_d, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
         optimum_gammaNs.append(opt_gammaN)
         start_gammaNs.append(start_gammaN)
         end_gammaNs.append(end_gammaN)
-        print(f'Computed optimum gammaN for {N} dimensions (up to {end_N})')
+        print(f'Computed optimum gammaN for {N} dimensions (up to {end_N}) - lattice dimension {lattice_d}')
 
     optimum_gammaNs_data = {
         'dimensions'            : dimensions,
@@ -78,4 +92,7 @@ if __name__ == "__main__":
 
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
-    optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv', index=False)
+    if lattice_d == 1:
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv', index=False)
+    elif lattice_d == 2:
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimum_gammaNs.csv', index=False)

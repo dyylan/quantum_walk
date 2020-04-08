@@ -22,7 +22,7 @@ def amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False, l
     plt.show()
 
 
-def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False):
+def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False, lattice_d=1):
     norm_overlaps = np.abs(np.multiply(np.conj(overlaps), overlaps))
     real_overlaps = np.real(overlaps)
     imag_overlaps = np.imag(overlaps)
@@ -37,7 +37,7 @@ def overlaps_plot(times, overlaps, alpha, gammaN, dimensions, save=False):
     ax.set(xlabel='$time~(s/\hbar)$')
     ax.grid() 
     if save:
-        plt.savefig(f'plots/p2/overlaps_alpha={alpha}_gammaN={gammaN}_N={dimensions}.png')
+        plt.savefig(f'plots/p2/overlaps_alpha={alpha}_gammaN={gammaN}_lat_dim={lattice_d}_N={dimensions}.png')
     plt.show()
 
 
