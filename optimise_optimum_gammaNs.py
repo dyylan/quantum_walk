@@ -52,4 +52,7 @@ if __name__ == "__main__":
 
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
-    optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimised_optimum_gammaNs.csv', index=False)
+    if lattice_d == 1:
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimised_optimum_gammaNs.csv', index=False)
+    elif lattice_d == 2:
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimised_optimum_gammaNs.csv', index=False)

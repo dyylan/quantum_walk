@@ -1,5 +1,5 @@
 import numpy as np
-from main import p1_parameters
+from main import p1_parameters, lattice_dimension
 from plots import amplitudes_plot
 from hamiltonian import Hamiltonian
 
@@ -12,7 +12,7 @@ def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
     s_psi_1s = []
     e1_minus_e0s = []        
     for point, gamma in enumerate(gammas):
-        H = Hamiltonian(dimensions, gamma, alpha, mark)
+        H = Hamiltonian(dimensions, gamma, alpha, mark, lattice_dimension)
         e1_minus_e0s.append(H.energy_1 - H.energy_0)
         m_psi_0s.append(np.square(np.abs(np.vdot(H.m_ket, H.psi_0))))
         s_psi_0s.append(np.square(np.abs(np.vdot(H.m_ket, H.psi_1))))
@@ -41,4 +41,4 @@ if __name__ == "__main__":
     print(f'optimum gammaN value is {opt_gammaN}')
 
     # Plot
-    amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save_plots)
+    amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save_plots, lattice_dimension)
