@@ -3,14 +3,21 @@ import scipy.linalg
 import matplotlib.pyplot as plt
 
 
-alpha = 2
+alpha = 1
 dimensions = 1024 # this is the dimensions of the Hamiltonian
 lattice_dimension = 2 # this is the physical lattice dimensions
 marked_state = 5
 optimum_gammaN = {
-    0   : 1.0,
-    1   : 79.77889447236181,  # for 1024 dimensions
-    2   : None
+    1 : {
+        0   : 1.0,
+        1   : 79.77889447236181,  # for 1024 dimensions
+        2   : None
+    },
+    2 : {
+        0   : 1.0,
+        1   : 7.0, # for 400 dimensions
+        2   : None
+    }
 }
 
 
@@ -31,7 +38,7 @@ p2_parameters = {
     'alpha'               : alpha,
     'end_time'            : 200,
     'time_step'           : 1,
-    'optimum_gammaN'      : optimum_gammaN[alpha],
+    'optimum_gammaN'      : optimum_gammaN[lattice_dimension][alpha],
     'save_plots'          : True
 }
 
