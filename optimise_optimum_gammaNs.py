@@ -5,6 +5,7 @@ from optimum_gammaNs import check_optimum_gammaNs_parameter_type, lookup_gamma, 
 
 
 parameters = {
+    'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
     'step_dimensions'     : 32,
@@ -36,7 +37,7 @@ if __name__ == "__main__":
         centre_gammaN = lookup_gamma(centre_gammaNs, N) * N
         start_gammaN = centre_gammaN - (gammaN_range/2)
         end_gammaN = centre_gammaN + (gammaN_range/2)
-        opt_gammaN = optimum_gammaN(N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
+        opt_gammaN = optimum_gammaN(lattice_d, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
         optimum_gammaNs.append(opt_gammaN)
         start_gammaNs.append(start_gammaN)
         end_gammaNs.append(end_gammaN)
