@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 alpha = 1
 dimensions = 1024 # this is the dimensions of the Hamiltonian
-lattice_dimension = 2 # this is the physical lattice dimensions
+lattice_dimension = 1 # this is the physical lattice dimensions
 marked_state = 5
 optimum_gammaN = {
     1 : {
@@ -75,8 +75,8 @@ p5_parameters = {
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
     'step_dimensions'     : 32,
-    'end_time'            : 250,
-    'time_step'           : 1,
+    'end_time'            : 220,
+    'time_step'           : 0.25,
     # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
     'optimum_gammaNs'     : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
     'save_plots'          : True
