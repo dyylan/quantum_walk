@@ -97,7 +97,7 @@ def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False):
     plt.show()
 
 
-def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, save=False):
+def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, marked, save=False):
     
     hundred_percent = [1 for _ in range(len(probabilities))]
     ninety_percent = [0.9 for _ in range(len(probabilities))]
@@ -116,5 +116,5 @@ def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, save
     ax.set(xlabel='$N$')
     ax.grid() 
     if save:
-        plt.savefig(f'plots/p5/probs_alpha={alpha}.png')
+        plt.savefig(f'plots/p5/probs_alpha={alpha}_m={marked}.png')
     plt.show()

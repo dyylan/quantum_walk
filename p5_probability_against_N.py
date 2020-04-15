@@ -38,4 +38,4 @@ if __name__ == "__main__":
     # Minimum gaps against dimensions
     dimensions, max_probs = p5(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, step_N)
 
-    p5_probability_against_N_plot(dimensions, max_probs, alpha, optimum_gammaNs, save_plots)
+    p5_probability_against_N_plot(dimensions, max_probs, alpha, optimum_gammaNs, marked_state, save_plots)
