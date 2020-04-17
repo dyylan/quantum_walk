@@ -3,7 +3,7 @@ import pandas as pd
 from scipy.signal import find_peaks 
 from .p2_marked_state_probability_against_time import p2
 from .plots import p4_time_against_N_plot
-from ..config import p4_parameters
+from ..config import parameters
 from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
 
 
@@ -23,13 +23,17 @@ def p4(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, step_N=1
 
 
 def run():
+    p4_parameters = parameters['p4']
+
+    # Parameters
+    alpha = parameters['alpha']      
+    marked_state = parameters['marked_state']
+
     start_N = p4_parameters['start_dimensions']
     end_N = p4_parameters['end_dimensions']
     step_N = p4_parameters['step_dimensions']
     end_time = p4_parameters['end_time'] 
     time_step = p4_parameters['time_step'] 
-    marked_state = p4_parameters['marked_state']
-    alpha = p4_parameters['alpha']                             
     optimum_gammaNs = p4_parameters['optimum_gammaNs']
     save_plots = p4_parameters['save_plots']
 

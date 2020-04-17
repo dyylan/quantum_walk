@@ -10,7 +10,7 @@ def p6(dimensions, alpha, gamma, time, save_plots):
     fidelities = []
     marked_states = list(range(1, dimensions+1, 1))
     for marked in marked_states:
-        H = Hamiltonian(dimensions, gamma, alpha, marked, lattice_dimension)
+        H = Hamiltonian(dimensions, gamma, alpha, marked, parameters['lattice_dimension'])
         state, _ = H.unitary_evolution(time)
         marked_amplitude = np.vdot(H.m_ket, state)
         fidelity = np.abs(np.multiply(np.conj(marked_amplitude), marked_amplitude))
@@ -20,8 +20,12 @@ def p6(dimensions, alpha, gamma, time, save_plots):
 
 
 def run():
-    alpha = p6_parameters['alpha']
-    dimensions = p6_parameters['dimensions']
+    p6_parameters = parameters['p6']
+
+    # Parameters
+    alpha = parameters['alpha']
+    dimensions = parameters['dimensions']
+    
     time = p6_parameters['time']
     save_plots = p6_parameters['save_plots']   
     optimum_gammaNs_file = p6_parameters['optimum_gammaNs'] 

@@ -1,6 +1,6 @@
 import numpy as np
 from .plots import p1_amplitudes_plot
-from ..config import p1_parameters, lattice_dimension
+from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 
 
@@ -12,7 +12,7 @@ def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
     s_psi_1s = []
     e1_minus_e0s = []        
     for point, gamma in enumerate(gammas):
-        H = Hamiltonian(dimensions, gamma, alpha, mark, lattice_dimension)
+        H = Hamiltonian(dimensions, gamma, alpha, mark, parameters['lattice_dimension'])
         e1_minus_e0s.append(H.energy_1 - H.energy_0)
         m_psi_0s.append(np.square(np.abs(np.vdot(H.m_ket, H.psi_0))))
         s_psi_0s.append(np.square(np.abs(np.vdot(H.m_ket, H.psi_1))))
@@ -24,12 +24,15 @@ def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
 
 
 def run():
-    # Parameters
-    dimensions = p1_parameters['dimensions']
-    marked_state = p1_parameters['marked_state']
+    p1_parameters = parameters['p1']
+
+    # Parameters    
+    alpha = parameters['alpha'] 
+    dimensions = parameters['dimensions']
+    marked_state = parameters['marked_state']
+    
     start_gamma = p1_parameters['start_gammaN']/dimensions
-    end_gamma = p1_parameters['end_gammaN']/dimensions
-    alpha = p1_parameters['alpha']                                            
+    end_gamma = p1_parameters['end_gammaN']/dimensions                              
     number_of_points = p1_parameters['number_of_points'] 
     save_plots = p1_parameters['save_plots'] 
 
