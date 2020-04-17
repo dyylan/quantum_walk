@@ -1,17 +1,17 @@
 import numpy as np
 import pandas as pd
-from hamiltonian import Hamiltonian
+from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'lattice_dimensions'  : 2,
+    'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
-    'end_dimensions'      : 1600,
+    'end_dimensions'      : 128,
     'step_dimensions'     : 32,
-    'marked_state'        : 5,                     
+    'marked_state'        : 64,                     
     'alpha'               : 1,
-    'start_gammaN'        : 0.1, 
-    'end_gammaN'          : 20,
+    'start_gammaN'        : 8, 
+    'end_gammaN'          : 16,
     'number_of_points'    : 200,
 }
 
@@ -53,7 +53,7 @@ def is_square(integer):
     return integer == int(root + 0.5) ** 2
 
 
-if __name__ == "__main__":
+def optimise():
     lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
@@ -93,6 +93,6 @@ if __name__ == "__main__":
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
     if lattice_d == 1:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv', index=False)
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimum_gammaNs_m={marked_state}.csv', index=False)
     elif lattice_d == 2:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimum_gammaNs.csv', index=False)
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimum_gammaNs_m={marked_state}.csv', index=False)

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from hamiltonian import Hamiltonian
-from optimum_gammaNs import check_optimum_gammaNs_parameter_type, lookup_gamma, optimum_gammaN
+from .optimum_gammaNs import check_optimum_gammaNs_parameter_type, lookup_gamma, optimum_gammaN
+from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {

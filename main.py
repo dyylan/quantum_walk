@@ -1,83 +1,10 @@
-import numpy as np
-import scipy.linalg
-import matplotlib.pyplot as plt
+from qualk.optimise import optimise_optimum_gammaNs, optimum_gammaNs, optimum_times
+from qualk.plotting import (p1_eigenstate_amplitudes_against_gammaN, 
+                            p2_marked_state_probability_against_time,
+                            p3_min_gap_against_N,
+                            p4_time_against_N,
+                            p5_probability_against_N,
+                            p6_fidelity_against_marked_state)
 
-
-alpha = 1
-dimensions = 1024 # this is the dimensions of the Hamiltonian
-lattice_dimension = 1 # this is the physical lattice dimensions
-marked_state = 5
-optimum_gammaN = {
-    1 : {
-        0   : 1.0,
-        1   : 79.77889447236181,  # for 1024 dimensions
-        2   : None
-    },
-    2 : {
-        0   : 1.0,
-        1   : 7.0, # for 400 dimensions
-        2   : None
-    }
-}
-
-
-p1_parameters = {
-    'dimensions'          : dimensions,
-    'marked_state'        : marked_state,                     
-    'alpha'               : alpha,
-    'start_gammaN'        : 1, 
-    'end_gammaN'          : 150,
-    'number_of_points'    : 150,
-    'save_plots'          : True
-}
-
-
-p2_parameters = {
-    'dimensions'          : dimensions,
-    'marked_state'        : marked_state,
-    'alpha'               : alpha,
-    'end_time'            : 200,
-    'time_step'           : 1,
-    'optimum_gammaN'      : optimum_gammaN[lattice_dimension][alpha],
-    'save_plots'          : True
-}
-
-
-p3_parameters = {
-    'marked_state'        : marked_state,
-    'alpha'               : alpha,
-    'start_dimensions'    : 64,
-    'end_dimensions'      : 1760,
-    'step_dimensions'     : 32,
-    # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
-    'optimum_gammaNs'     : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
-    'save_plots'          : True
-}
-
-
-p4_parameters = {
-    'marked_state'        : marked_state,
-    'alpha'               : alpha,
-    'start_dimensions'    : 64,
-    'end_dimensions'      : 1760,
-    'step_dimensions'     : 32,
-    'end_time'            : 250,
-    'time_step'           : 1,
-    # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
-    'optimum_gammaNs'     : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
-    'save_plots'          : True
-}
-
-
-p5_parameters = {
-    'marked_state'        : marked_state,
-    'alpha'               : alpha,
-    'start_dimensions'    : 64,
-    'end_dimensions'      : 1760,
-    'step_dimensions'     : 32,
-    'end_time'            : 218,
-    'time_step'           : 0.25,
-    # For optimum_gammaNs can put a single number (eg. 1.0) or a file path to optimum_gammaNs CSV.
-    'optimum_gammaNs'     : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
-    'save_plots'          : True
-}
+if __name__ == "__main__":
+    p2_marked_state_probability_against_time.run()

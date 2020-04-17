@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.linalg
-from ket import Ket
+from .ket import Ket
 
 
 class Hamiltonian:
@@ -16,6 +16,7 @@ class Hamiltonian:
         self.marked = marked_state
         self._m_ket = Ket(dimensions, 'm', marked_state)
         self._s_ket = Ket(dimensions, 's')
+        self._a_ket = Ket(dimensions, 'a', alpha=1)
         if lattice_d == 1:
             self.H_matrix = self._hamiltonian_matrix()
         elif lattice_d == 2:
@@ -36,8 +37,8 @@ class Hamiltonian:
     def s_ket(self):
         return self._s_ket.ket
     
-    def unitary_evolution(self, end_time, dt=None, print_status=False, initial_state=None):
-        initial_state = self.s_ket if not initial_state else initial_state
+    def unitary_evolution(self, end_time, dt=None, print_status=False, initial_state='s'):
+        initial_state = self.s_ket if str(initial_state)=='s' else initial_state.ket
         if dt:
             times = [dt*interval for interval in range(int(np.ceil(end_time/dt)))]
             states = [np.matmul(self._unitary_matrix(time, print_status), initial_state)

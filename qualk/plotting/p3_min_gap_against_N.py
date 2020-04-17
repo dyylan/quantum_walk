@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
-from main import p3_parameters
-from plots import p3_min_gap_against_N_plot
-from hamiltonian import Hamiltonian
-from optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
+from .plots import p3_min_gap_against_N_plot
+from ..config import p3_parameters
+from ..quantum.hamiltonian import Hamiltonian
+from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
  
 
 def p3(start_N, end_N, opt_gammaNs, alpha, marked, step_N=1):
@@ -19,7 +19,7 @@ def p3(start_N, end_N, opt_gammaNs, alpha, marked, step_N=1):
     return dimensions, min_gaps
 
 
-if __name__ == "__main__":
+def run():
     # Parameters
     start_N = p3_parameters['start_dimensions']
     end_N = p3_parameters['end_dimensions']

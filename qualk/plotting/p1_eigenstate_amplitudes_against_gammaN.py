@@ -1,7 +1,7 @@
 import numpy as np
-from main import p1_parameters, lattice_dimension
-from plots import amplitudes_plot
-from hamiltonian import Hamiltonian
+from .plots import p1_amplitudes_plot
+from ..config import p1_parameters, lattice_dimension
+from ..quantum.hamiltonian import Hamiltonian
 
 
 def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
@@ -23,7 +23,7 @@ def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
     return gammasN, [m_psi_0s, m_psi_1s, s_psi_0s, s_psi_1s], e1_minus_e0s
 
 
-if __name__ == "__main__":
+def run():
     # Parameters
     dimensions = p1_parameters['dimensions']
     marked_state = p1_parameters['marked_state']

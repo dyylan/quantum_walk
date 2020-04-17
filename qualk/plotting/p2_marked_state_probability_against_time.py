@@ -1,17 +1,19 @@
 import numpy as np
-from main import p2_parameters, lattice_dimension
-from plots import overlaps_plot
-from hamiltonian import Hamiltonian
+from .plots import p2_overlaps_plot
+from ..config import p2_parameters, lattice_dimension, init_state, use_init_state
+from ..quantum.hamiltonian import Hamiltonian
+from ..quantum.ket import Ket
 
 
 def p2(dimensions, gamma, alpha, marked, end_time, time_step, print_status=False):
     H = Hamiltonian(dimensions, gamma, alpha, marked, lattice_dimension)
-    states, times = H.unitary_evolution(end_time, dt=time_step, print_status=print_status)
+    initial_state = init_state if use_init_state else 's'
+    states, times = H.unitary_evolution(end_time, dt=time_step, print_status=print_status, initial_state=initial_state)
     overlaps = [np.vdot(H.m_ket, state) for state in states]
     return times, overlaps
 
 
-if __name__ == "__main__":
+def run():
     # Parameters
     dimensions = p2_parameters['dimensions']
     marked_state = p2_parameters['marked_state']
@@ -27,4 +29,4 @@ if __name__ == "__main__":
     times, overlaps = p2(dimensions, gamma, alpha, marked_state, end_time, time_step, True)
 
     # Plot
-    overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, save_plots, lattice_dimension)
+    p2_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, save_plots, lattice_dimension)
