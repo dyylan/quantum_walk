@@ -7,12 +7,12 @@ from ..config import parameters
 from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
 
 
-def p4(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, step_N=1):
+def p4(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, ring, step_N=1):
     dimensions = list(range(start_N, end_N+1, step_N))
     opt_times = []
     for N in dimensions:
         gamma = lookup_gamma(opt_gammaNs, N)
-        times, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step)
+        times, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step, ring)
         marked_probability = np.abs(np.multiply(np.conj(marked_amplitude), marked_amplitude))
         peaks, _ = find_peaks(marked_probability, height=(0.3, 1.05))
         opt_time = times[peaks[0]]
@@ -26,6 +26,7 @@ def run():
     p4_parameters = parameters['p4']
 
     # Parameters
+    ring = parameters['ring']
     alpha = parameters['alpha']      
     marked_state = parameters['marked_state']
 
@@ -40,6 +41,6 @@ def run():
     optimum_gammaNs = check_optimum_gammaNs_parameter_type(optimum_gammaNs)
 
     # Minimum gaps against dimensions
-    dimensions, opt_times = p4(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, step_N)
+    dimensions, opt_times = p4(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, ring, step_N)
 
-    p4_time_against_N_plot(dimensions, opt_times, alpha, optimum_gammaNs, save_plots)
+    p4_time_against_N_plot(dimensions, opt_times, alpha, optimum_gammaNs, save_plots, ring)

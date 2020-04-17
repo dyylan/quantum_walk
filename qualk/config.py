@@ -17,15 +17,18 @@ optimum_gammaN = {
     }
 }
 
+lat_d = 1
+alpha = 1
 
 parameters = {
-    'alpha'                     : 1,
+    'ring'                      : True,
+    'alpha'                     : alpha,
     'dimensions'                : 256, # this is the dimensions of the Hamiltonian
-    'lattice_dimension'         : 1, # this is the physical lattice dimensions
+    'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 50,
     'save_tag'                  : 'm_state', # Adds an additional message to the saved plot filename
-    'init_state'                : Ket(dimensions=dimensions, type='m', marked=marked_state, alpha=alpha),
-    'use_init_state'            : True,
+    'init_state'                : '',#Ket(dimensions=dimensions, type='m', marked=marked_state, alpha=alpha),
+    'use_init_state'            : False,
 
     'p1'                        : {
         'start_gammaN'              : 1, 
@@ -37,7 +40,7 @@ parameters = {
     'p2'                        : {
         'end_time'                  : 150,
         'time_step'                 : 1,
-        'optimum_gammaN'            : optimum_gammaN[lattice_dimension][alpha],
+        'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
         'save_plots'                : True
     },
 

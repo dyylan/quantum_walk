@@ -5,10 +5,11 @@ from .ket import Ket
 
 class Hamiltonian:
 
-    def __init__(self, dimensions, gamma, alpha, marked_state, lattice_d=1):
+    def __init__(self, dimensions, gamma, alpha, marked_state, ring=False, lattice_d=1):
         """Initialises a hamiltonian with the form of a spatial quantum walk
         with a 1/|i-j|^alpha potential drop-off.
         """
+        self.ring = ring
         self.lattice_d = lattice_d
         self.dimensions = dimensions
         self.gamma = gamma
@@ -16,11 +17,13 @@ class Hamiltonian:
         self.marked = marked_state
         self._m_ket = Ket(dimensions, 'm', marked_state)
         self._s_ket = Ket(dimensions, 's')
-        self._a_ket = Ket(dimensions, 'a', alpha=1)
         if lattice_d == 1:
             self.H_matrix = self._hamiltonian_matrix()
         elif lattice_d == 2:
-            self.H_matrix = self._2d_hamiltonian_matrix()
+            if not ring:
+                self.H_matrix = self._2d_hamiltonian_matrix()
+            else:
+                raise ValueError('Cannot have a 2d Hamiltonian with a ring yet.')
         self.eigenvectors, self.eigenvalues = Hamiltonian.eigenvectors_eigenvalues(self.H_matrix)
         self.psi_0, self.psi_1 = self._psi_0_and_psi_1()
         self.energy_0, self.energy_1 = self._energy_0_and_energy_1()
@@ -49,8 +52,14 @@ class Hamiltonian:
             return state, end_time
 
     def _hamiltonian_matrix(self):
+        if self.ring:
+            def coef(row, col):
+                return 1/((np.abs(col-row))**(self.alpha)) + 1/((np.abs(self.dimensions-np.abs(col-row)))**(self.alpha))
+        else:
+            def coef(row, col):
+                return 1/((np.abs(col-row))**(self.alpha))
         if self.alpha:                      
-            H = -self.gamma*np.array([[(1/((np.abs(col-row))**(self.alpha))) if col != row else 1 
+            H = -self.gamma*np.array([[coef(row, col) if col != row else 1 
                                                 for col in range(self.dimensions)] 
                                                     for row in range(self.dimensions)]) 
             H[(self.marked-1, self.marked-1)] = H[(self.marked-1, self.marked-1)] - 1

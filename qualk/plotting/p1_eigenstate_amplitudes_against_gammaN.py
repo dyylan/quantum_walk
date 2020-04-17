@@ -4,7 +4,7 @@ from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 
 
-def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
+def p1(dimensions, mark, start_gamma, end_gamma, alpha, ring, number_of_points):
     gammas = np.linspace(start_gamma, end_gamma, number_of_points)
     m_psi_0s = []
     s_psi_0s = []
@@ -12,7 +12,7 @@ def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
     s_psi_1s = []
     e1_minus_e0s = []        
     for point, gamma in enumerate(gammas):
-        H = Hamiltonian(dimensions, gamma, alpha, mark, parameters['lattice_dimension'])
+        H = Hamiltonian(dimensions, gamma, alpha, mark, ring, parameters['lattice_dimension'])
         e1_minus_e0s.append(H.energy_1 - H.energy_0)
         m_psi_0s.append(np.square(np.abs(np.vdot(H.m_ket, H.psi_0))))
         s_psi_0s.append(np.square(np.abs(np.vdot(H.m_ket, H.psi_1))))
@@ -26,7 +26,8 @@ def p1(dimensions, mark, start_gamma, end_gamma, alpha, number_of_points):
 def run():
     p1_parameters = parameters['p1']
 
-    # Parameters    
+    # Parameters
+    ring = parameters['ring']
     alpha = parameters['alpha'] 
     dimensions = parameters['dimensions']
     marked_state = parameters['marked_state']
@@ -38,10 +39,10 @@ def run():
 
     # Eigenstate amplitudes
     gammasN, amps, e1_minus_e0s = p1(dimensions, marked_state, start_gamma, 
-                                        end_gamma, alpha, number_of_points)
+                                        end_gamma, alpha, ring, number_of_points)
 
     opt_gammaN = gammasN[np.argmin(e1_minus_e0s)]
     print(f'optimum gammaN value is {opt_gammaN}')
 
     # Plot
-    amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save_plots, lattice_dimension)
+    p1_amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save_plots, ring, parameters['lattice_dimension'])

@@ -1,11 +1,15 @@
 import matplotlib.pyplot as plt 
 import numpy as np
 from scipy.optimize import curve_fit
-from ..config import save_tag
+from ..config import parameters
 from ..functions import fits
 
 
-def p1_amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False, lattice_d=1):
+def save_insert():
+    return '_' + parameters['save_tag'] if parameters['save_tag'] else ''
+
+
+def p1_amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False, ring=False, lattice_d=1):
     fig, ax = plt.subplots()
     linestyles = ['solid', 'solid', 'dashed', 'dashed']
     for i, amp in enumerate(amps):
@@ -18,14 +22,13 @@ def p1_amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False
                 '$E_1 - E_0$'])
     ax.set(xlabel='$\gamma  N$')
     ax.grid()
-    if save_tag:
-        save_insert = '_' + save_tag
-    if save: 
-        plt.savefig(f'plots/p1/alpha={alpha}{save_insert}_lat_dim={lattice_d}_dim={dimensions}.png')
+    if save:
+        ring_tag = '_ring' if ring else ''
+        plt.savefig(f'plots/p1{ring_tag}/alpha={alpha}{save_insert()}_lat_dim={lattice_d}_dim={dimensions}.png')
     plt.show()
 
 
-def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=False, lattice_d=1):
+def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=False, ring=False, lattice_d=1):
     norm_overlaps = np.abs(np.multiply(np.conj(overlaps), overlaps))
     real_overlaps = np.real(overlaps)
     imag_overlaps = np.imag(overlaps)
@@ -39,13 +42,13 @@ def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=Fa
                 '$|\langle m| U |s\\rangle|^2$'])
     ax.set(xlabel='$time~(s/\hbar)$')
     ax.grid()
-    save_insert = '_' + save_tag if save_tag else ''
     if save:
-        plt.savefig(f'plots/p2/alpha={alpha}{save_insert}_gammaN={gammaN}_m={marked}_lat_dim={lattice_d}_N={dimensions}.png')
+        ring_tag = '_ring' if ring else ''
+        plt.savefig(f'plots/p2{ring_tag}/alpha={alpha}{save_insert()}_gammaN={gammaN}_m={marked}_lat_dim={lattice_d}_N={dimensions}.png')
     plt.show()
 
 
-def p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, gammaN, save=False):
+def p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, gammaN, save=False, ring=False):
     
     popt, pcov = curve_fit(fits.inverse_power_fit, dimensions, min_gaps, bounds=(0, [10., 1., 1.]))
     print(f'Fit for inverse power gives: y = {popt[0]} / x^{popt[1]} + {popt[2]}')
@@ -68,13 +71,13 @@ def p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, gammaN, save=False):
                 '$1/N$'])
     ax.set(xlabel='$N$')
     ax.grid() 
-    save_insert = '_' + save_tag if save_tag else ''
     if save:
-        plt.savefig(f'plots/p3/min_gaps_alpha={alpha}{save_insert}.png')
+        ring_tag = '_ring' if ring else ''
+        plt.savefig(f'plots/p3{ring_tag}/min_gaps_alpha={alpha}{save_insert()}.png')
     plt.show()
 
 
-def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False):
+def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False, ring=False):
     
     popt, pcov = curve_fit(fits.power_fit, dimensions, times, bounds=(0, [10., 1., 1.]))
     print(f'Fit for power gives: y = {popt[0]} * x^{popt[1]} + {popt[2]}')
@@ -97,13 +100,13 @@ def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False):
                 '$1/N$'])
     ax.set(xlabel='$N$')
     ax.grid()
-    save_insert = '_' + save_tag if save_tag else ''
     if save:
-        plt.savefig(f'plots/p4/times_alpha={alpha}{save_insert}.png')
+        ring_tag = '_ring' if ring else ''
+        plt.savefig(f'plots/p4{ring_tag}/times_alpha={alpha}{save_insert()}.png')
     plt.show()
 
 
-def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, marked, save=False):
+def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, marked, save=False, ring=False):
     
     hundred_percent = [1 for _ in range(len(probabilities))]
     ninety_percent = [0.9 for _ in range(len(probabilities))]
@@ -121,13 +124,13 @@ def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, mark
                 '$80\%$'])
     ax.set(xlabel='$N$')
     ax.grid()
-    save_insert = '_' + save_tag if save_tag else ''
     if save:
-        plt.savefig(f'plots/p5/probs_alpha={alpha}_m={marked}{save_insert}.png')
+        ring_tag = '_ring' if ring else ''
+        plt.savefig(f'plots/p5{ring_tag}/probs_alpha={alpha}_m={marked}{save_insert()}.png')
     plt.show()
 
 
-def p6_fidelity_against_marked_state(marked_states, fidelities, alpha, time, dimensions, gammaN, save=False):
+def p6_fidelity_against_marked_state(marked_states, fidelities, alpha, time, dimensions, gammaN, save=False, ring=False):
     
     hundred_percent = [1 for _ in range(len(fidelities))]
     ninety_percent = [0.9 for _ in range(len(fidelities))]
@@ -145,7 +148,7 @@ def p6_fidelity_against_marked_state(marked_states, fidelities, alpha, time, dim
                 '$80\%$'])
     ax.set(xlabel='Marked state')
     ax.grid()
-    save_insert = '_' + save_tag if save_tag else ''
     if save:
-        plt.savefig(f'plots/p6/alpha={alpha}_N={dimensions}_time={time}_gammaN={gammaN}{save_insert}.png')
+        ring_tag = '_ring' if ring else ''
+        plt.savefig(f'plots/p6{ring_tag}/alpha={alpha}_N={dimensions}_time={time}_gammaN={gammaN}{save_insert()}.png')
     plt.show()
