@@ -1,7 +1,6 @@
 import numpy as np
 import scipy.linalg
 import matplotlib.pyplot as plt
-from .quantum.ket import Ket
 
 
 optimum_gammaN = {
@@ -26,8 +25,8 @@ parameters = {
     'dimensions'                : 256, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 50,
-    'save_tag'                  : 'm_state', # Adds an additional message to the saved plot filename
-    'init_state'                : '',#Ket(dimensions=dimensions, type='m', marked=marked_state, alpha=alpha),
+    'save_tag'                  : '', # Adds an additional message to the saved plot filename
+    'init_state'                : '', # TODO: implement for all plotting functions: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,
 
     'p1'                        : {
