@@ -5,6 +5,7 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
+    'ring'                : False,
     'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
@@ -16,7 +17,8 @@ parameters = {
 }
 
 
-if __name__ == "__main__":
+def optimise():
+    ring = parameters['ring']
     lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
@@ -26,7 +28,8 @@ if __name__ == "__main__":
     gammaN_range = parameters['gammaN_range']
     number_of_points = parameters['number_of_points']
 
-    centre_gammaNs_csv = f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv'
+    ring_tag = '_ring' if ring else ''
+    centre_gammaNs_csv = f'optimum_gamma/alpha={alpha}{ring_tag}/optimum_gammaNs.csv'
     centre_gammaNs = check_optimum_gammaNs_parameter_type(centre_gammaNs_csv)
     
     dimensions = list(range(start_N, end_N+1, step_N))
@@ -55,6 +58,9 @@ if __name__ == "__main__":
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
     if lattice_d == 1:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}/optimised_optimum_gammaNs.csv', index=False)
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{ring_tag}/optimised_optimum_gammaNs.csv', index=False)
     elif lattice_d == 2:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimised_optimum_gammaNs.csv', index=False)
+        if not ring:
+            optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimised_optimum_gammaNs.csv', index=False)
+        else:
+            raise ValueError('Ring for lattice dimension 2 is not implemented yet.')
