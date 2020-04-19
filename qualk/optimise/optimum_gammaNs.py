@@ -95,11 +95,12 @@ def optimise():
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
     ring_tag = '_ring' if ring else ''
+    marked_state_tag = f'_m={marked_state}' if not ring else ''
 
     if lattice_d == 1:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{ring_tag}/optimum_gammaNs_m={marked_state}.csv', index=False)
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{ring_tag}/optimum_gammaNs{marked_state_tag}.csv', index=False)
     elif lattice_d == 2:
         if not ring:
-            optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimum_gammaNs_m={marked_state}.csv', index=False)
+            optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimum_gammaNs{marked_state_tag}.csv', index=False)
         else:
             raise ValueError('Ring for lattice dimension 2 is not implemented yet.')

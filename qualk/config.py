@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 optimum_gammaN = {
     1 : {
         0   : 1.0,
-        1   : 25.66607253438912,  # for 256 dimensions
+        1   : 69.59633027522935,  # for 1024 dimensions with Ring
         2   : None
     },
     2 : {
@@ -22,9 +22,9 @@ alpha = 1
 parameters = {
     'ring'                      : True,
     'alpha'                     : alpha,
-    'dimensions'                : 256, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 1024, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 50,
+    'marked_state'              : 20,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
     'init_state'                : '', # TODO: implement for all plotting functions: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,

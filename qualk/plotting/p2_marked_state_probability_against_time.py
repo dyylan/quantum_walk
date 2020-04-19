@@ -33,7 +33,7 @@ def run():
     gamma = optimum_gammaN/dimensions
 
     # State probability over time
-    times, overlaps = p2(dimensions, gamma, alpha, marked_state, end_time, time_step, ring, True)
+    times, overlaps = p2(dimensions, gamma, alpha, marked_state, end_time, time_step, ring, lattice_dimension, True)
 
     # Plot
     p2_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, save_plots, ring, lattice_dimension)

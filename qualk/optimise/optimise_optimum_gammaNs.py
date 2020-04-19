@@ -5,14 +5,14 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'ring'                : False,
+    'ring'                : True,
     'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
     'step_dimensions'     : 32,
-    'marked_state'        : 5,                     
+    'marked_state'        : 50,                     
     'alpha'               : 1,
-    'gammaN_range'        : 0.01,
+    'gammaN_range'        : 1,
     'number_of_points'    : 100,
 }
 
@@ -41,7 +41,7 @@ def optimise():
         centre_gammaN = lookup_gamma(centre_gammaNs, N) * N
         start_gammaN = centre_gammaN - (gammaN_range/2)
         end_gammaN = centre_gammaN + (gammaN_range/2)
-        opt_gammaN = optimum_gammaN(lattice_d, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
+        opt_gammaN = optimum_gammaN(lattice_d, ring, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
         optimum_gammaNs.append(opt_gammaN)
         start_gammaNs.append(start_gammaN)
         end_gammaNs.append(end_gammaN)
