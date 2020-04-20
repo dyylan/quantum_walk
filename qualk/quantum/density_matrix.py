@@ -26,7 +26,7 @@ class Rho:
         identity = np.matrix('1 0; 0 1')
         for i in range(self.n):
             if i == 0:
-            proj = np.outer(ket_0,ket_0)
+                proj = np.outer(ket_0,ket_0)
             else:
                 proj = identity
             for j in range(1,n):
@@ -43,7 +43,7 @@ class Rho:
         identity = np.matrix('1 0; 0 1')
         for i in range(self.n):
             if i == 0:
-            proj = np.outer(ket_1,ket_1)
+                proj = np.outer(ket_1,ket_1)
             else:
                 proj = identity
             for j in range(1,n):
@@ -62,11 +62,9 @@ class Rho:
             rho_h = np.matmul(current_rho,self.hamiltonain)
             new_rho = current_rho- ( 1j/grain )*( h_rho - rho_h )
             if kappa != 0:
-                p_term = self.projectors_0[0].dot(current_rho.dot(self.projectors_0[0])) 
-                       + self.projectors_1[0].dot(current_rho.dot(self.projectors_1[0]))
+                p_term = self.projectors_0[0].dot(current_rho.dot(self.projectors_0[0])) + self.projectors_1[0].dot(current_rho.dot(self.projectors_1[0]))
                 for i in range(1,n):
-                    p_term = p_term + self.projectors_0[i].dot(current_rho.dot(self.projectors_0[i])) 
-                                    + self.projectors_1[i].dot(current_rho.dot(self.projectors_1[i]))
+                    p_term = p_term + self.projectors_0[i].dot(current_rho.dot(self.projectors_0[i])) + self.projectors_1[i].dot(current_rho.dot(self.projectors_1[i]))
                 new_rho = new_rho - (kappa/grain)*( current_rho - (1/self.n)*p_term )
             current_rho = new_rho
         self.rho_t = current_rho
