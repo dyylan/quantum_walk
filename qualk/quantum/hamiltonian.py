@@ -59,7 +59,7 @@ class Hamiltonian:
             def coef(row, col):
                 return 1/((np.abs(col-row))**(self.alpha))
         if self.alpha:                      
-            H = -self.gamma*np.array([[coef(row, col) if col != row else 1 
+            H = -self.gamma*np.array([[coef(row, col) if col != row else 1
                                                 for col in range(self.dimensions)] 
                                                     for row in range(self.dimensions)]) 
             H[(self.marked-1, self.marked-1)] = H[(self.marked-1, self.marked-1)] - 1

@@ -8,4 +8,6 @@ from qualk.plotting import (p1_eigenstate_amplitudes_against_gammaN,
 
 
 if __name__ == "__main__":
+    #optimum_gammaNs.optimise()
+
     p3_min_gap_against_N.run()

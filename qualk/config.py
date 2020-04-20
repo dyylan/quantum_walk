@@ -24,7 +24,7 @@ parameters = {
     'alpha'                     : alpha,
     'dimensions'                : 1760, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 50,
+    'marked_state'              : 5,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
     'init_state'                : '', # TODO: implement for all states: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,
@@ -44,7 +44,7 @@ parameters = {
     },
 
     'p3'                        : {
-        'start_dimensions'          : 64,
+        'start_dimensions'          : 1600,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
         'save_plots'                : True
