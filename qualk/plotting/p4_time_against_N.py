@@ -36,7 +36,6 @@ def run():
     step_N = p4_parameters['step_dimensions']
     end_time = p4_parameters['end_time'] 
     time_step = p4_parameters['time_step'] 
-    optimum_gammaNs = p4_parameters['optimum_gammaNs']
     save_plots = p4_parameters['save_plots']
 
     lat_d_tag = '_lat_dim=2' if lattice_dimension==2 else ''
