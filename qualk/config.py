@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 optimum_gammaN = {
     1 : {
         0   : 1.0,
-        1   : 69.59633027522935,  # for 1024 dimensions with Ring
+        1   : 111.11894171068481,  # for 1760 dimensions with Ring
         2   : None
     },
     2 : {
@@ -22,11 +22,11 @@ alpha = 1
 parameters = {
     'ring'                      : True,
     'alpha'                     : alpha,
-    'dimensions'                : 1024, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 1760, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 20,
+    'marked_state'              : 50,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
-    'init_state'                : '', # TODO: implement for all plotting functions: 'm', 'a', 's', 'sq', 'b'
+    'init_state'                : '', # TODO: implement for all states: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,
 
     'p1'                        : {
@@ -37,7 +37,7 @@ parameters = {
     },
 
     'p2'                        : {
-        'end_time'                  : 150,
+        'end_time'                  : 200,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
         'save_plots'                : True
@@ -47,7 +47,6 @@ parameters = {
         'start_dimensions'          : 64,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
-        'optimum_gammaNs'           : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
         'save_plots'                : True
     },
 
@@ -55,9 +54,8 @@ parameters = {
         'start_dimensions'          : 64,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
-        'end_time'                  : 250,
+        'end_time'                  : 95, # For ring the timestep can be less
         'time_step'                 : 1,
-        'optimum_gammaNs'           : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
         'save_plots'                : True
     },
 
@@ -65,15 +63,13 @@ parameters = {
         'start_dimensions'          : 64,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
-        'end_time'                  : 218,
+        'end_time'                  : 95, # For ring the timestep can be less
         'time_step'                 : 1,
-        'optimum_gammaNs'           : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
         'save_plots'                : True
     },
 
     'p6'                        : {
         'time'                      : 43.0,
-        'optimum_gammaNs'           : f'optimum_gamma/alpha={alpha}/optimum_gammaNs.csv',
         'save_plots'                : True         
     }
 }
