@@ -44,7 +44,7 @@ parameters = {
     },
 
     'p3'                        : {
-        'start_dimensions'          : 1600,
+        'start_dimensions'          : 64,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
         'save_plots'                : True
