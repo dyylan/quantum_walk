@@ -22,6 +22,7 @@ alpha = 1
 parameters = {
     'ring'                      : True,
     'alpha'                     : alpha,
+    'kappa'                     : 0,
     'dimensions'                : 1760, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 50,
