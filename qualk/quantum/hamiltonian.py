@@ -5,7 +5,7 @@ from .ket import Ket
 
 class Hamiltonian:
 
-    def __init__(self, dimensions, gamma, alpha, marked_state, ring=False, lattice_d=1, full=False):
+    def __init__(self, dimensions, gamma, alpha, marked_state, ring=False, lattice_d=1):
         """Initialises a hamiltonian with the form of a spatial quantum walk
         with a 1/|i-j|^alpha potential drop-off.
         """
@@ -24,8 +24,6 @@ class Hamiltonian:
                 self.H_matrix = self._2d_hamiltonian_matrix()
             else:
                 raise ValueError('Cannot have a 2d Hamiltonian with a ring yet.')
-        if full:
-            self.full_H_matrix = self._full_hamiltonian_matrix()
         self.eigenvectors, self.eigenvalues = Hamiltonian.eigenvectors_eigenvalues(self.H_matrix)
         self.psi_0, self.psi_1 = self._psi_0_and_psi_1()
         self.energy_0, self.energy_1 = self._energy_0_and_energy_1()
@@ -53,6 +51,20 @@ class Hamiltonian:
             state = np.matmul(self._unitary_matrix(end_time), initial_state)
             return state, end_time
 
+    def full_hamiltonian_matrix(self):
+        N = 2**self.dimensions
+        full_H = np.zeros([N,N])
+        non_zeros = [(2**i) for i in range(self.dimensions)]
+        for i,k in enumerate(non_zeros):
+            for j,l in enumerate(non_zeros):
+                if j != i:
+                    full_H[k][l] = self.H_matrix[self.dimensions-(i+1)][self.dimensions-(j+1)]
+        for i in range(N):
+            full_H[i][i] = 1
+        full_H = -self.gamma*full_H
+        full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] = full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] - 1
+        self.H_matrix = full_H
+
     def _hamiltonian_matrix(self):
         if self.ring:
             def coef(row, col):
@@ -78,22 +90,6 @@ class Hamiltonian:
         H = -self.gamma*np.array(H)
         H[(self.marked-1, self.marked-1)] = H[(self.marked-1, self.marked-1)] - 1
         return H
-
-    def _full_hamiltonian_matrix(self):
-        N = 2**self.dimensions
-        full_H = np.zeros([N,N])
-        non_zeros = [((2**(i))+1) for i in range(self.dimensions)]
-        for i,k in enumerate(non_zeros):
-            for j,l in enumerate(non_zeros):
-                if j != i:
-                    full_H[k][l] = self.H_matrix[self.dimensions-i][self.dimensions-j]
-        for i in range(N):
-            full_H[i][i] = 1
-        full_H = -self.gamma*full_H
-        full_H[self.marked-1][self.marked-1] = full_H[self.marked-1][self.marked-1] - 1
-        return full_H
-
-
 
     def _unitary_matrix(self, time, print_status=False):
         if print_status:
