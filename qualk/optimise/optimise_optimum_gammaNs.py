@@ -5,7 +5,7 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'chain'               : 'ring',
+    'chain'               : 'chord',
     'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
