@@ -67,7 +67,7 @@ class Hamiltonian:
                 return 1/((np.abs(col-row))**(self.alpha)) + 1/((np.abs(self.dimensions-np.abs(col-row)))**(self.alpha))
         elif self._chain == 3:
             def coef(row, col):
-                return np.pi/(self.dimensions*np.abs(np.sin(np.pi*(row-col)/self.dimensions)))
+                return np.pi**self.alpha/((self.dimensions*np.abs(np.sin(np.pi*(row-col)/self.dimensions)))**self.alpha)
         if self.alpha: 
             H = -self.gamma*np.array([[coef(row, col) if col != row else 1
                                                 for col in range(self.dimensions)] 
