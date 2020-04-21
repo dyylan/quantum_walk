@@ -24,22 +24,22 @@ chain_form = {
 }
 
 lat_d = 1
-alpha = 3
+alpha = 1
 
 parameters = {
-    'chain'                     : chain_form[2],
+    'chain'                     : chain_form[3],
     'alpha'                     : alpha,
-    'dimensions'                : 256, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 512, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 40,
+    'marked_state'              : 5,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
     'init_state'                : 'm', # States: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,
 
     'p1'                        : {
         'start_gammaN'              : 1, 
-        'end_gammaN'                : 4000,
-        'number_of_points'          : 150,
+        'end_gammaN'                : 100,
+        'number_of_points'          : 50,
         'save_plots'                : True
     },
 
