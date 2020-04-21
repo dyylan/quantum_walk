@@ -7,7 +7,8 @@ optimum_gammaN = {
     1 : {
         0   : 1.0,
         1   : 69.40946158836066,  # for 1024 dimensions with Ring
-        2   : None
+        2   : None,
+        3   : 1374.966 # for 256 dimensions with Ring 
     },
     2 : {
         0   : 1.0,
@@ -16,28 +17,34 @@ optimum_gammaN = {
     }
 }
 
+chain_form = {
+    1   :   'open',
+    2   :   'ring',
+    3   :   'chord'
+}
+
 lat_d = 1
-alpha = 1
+alpha = 3
 
 parameters = {
-    'ring'                      : True,
+    'chain'                     : chain_form[2],
     'alpha'                     : alpha,
-    'dimensions'                : 1024, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 256, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 40,
-    'save_tag'                  : 'm_init', # Adds an additional message to the saved plot filename
+    'save_tag'                  : '', # Adds an additional message to the saved plot filename
     'init_state'                : 'm', # States: 'm', 'a', 's', 'sq', 'b'
-    'use_init_state'            : True,
+    'use_init_state'            : False,
 
     'p1'                        : {
         'start_gammaN'              : 1, 
-        'end_gammaN'                : 150,
+        'end_gammaN'                : 4000,
         'number_of_points'          : 150,
         'save_plots'                : True
     },
 
     'p2'                        : {
-        'end_time'                  : 800,
+        'end_time'                  : 400,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
         'save_plots'                : True

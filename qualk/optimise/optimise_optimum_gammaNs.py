@@ -5,7 +5,7 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'ring'                : True,
+    'chain'               : 'ring',
     'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
     'end_dimensions'      : 1760,
@@ -18,7 +18,7 @@ parameters = {
 
 
 def optimise():
-    ring = parameters['ring']
+    chain = parameters['chain']
     lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
@@ -28,8 +28,9 @@ def optimise():
     gammaN_range = parameters['gammaN_range']
     number_of_points = parameters['number_of_points']
 
-    ring_tag = '_ring' if ring else ''
-    centre_gammaNs_csv = f'optimum_gamma/alpha={alpha}{ring_tag}/optimum_gammaNs.csv'
+    chain_tag = '_' + chain
+    lat_dim_tag = '_lat_dim' if lattice_d == 2 else ''
+    centre_gammaNs_csv = f'optimum_gamma/alpha={alpha}{chain_tag}{lat_dim_tag}/optimum_gammaNs.csv'
     centre_gammaNs = check_optimum_gammaNs_parameter_type(centre_gammaNs_csv)
     
     dimensions = list(range(start_N, end_N+1, step_N))
@@ -41,7 +42,7 @@ def optimise():
         centre_gammaN = lookup_gamma(centre_gammaNs, N) * N
         start_gammaN = centre_gammaN - (gammaN_range/2)
         end_gammaN = centre_gammaN + (gammaN_range/2)
-        opt_gammaN = optimum_gammaN(lattice_d, ring, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
+        opt_gammaN = optimum_gammaN(lattice_d, chain, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
         optimum_gammaNs.append(opt_gammaN)
         start_gammaNs.append(start_gammaN)
         end_gammaNs.append(end_gammaN)
@@ -58,9 +59,9 @@ def optimise():
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
     if lattice_d == 1:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{ring_tag}/optimised_optimum_gammaNs.csv', index=False)
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{chain_tag}/optimised_optimum_gammaNs.csv', index=False)
     elif lattice_d == 2:
-        if not ring:
+        if chain == 'open':
             optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimised_optimum_gammaNs.csv', index=False)
         else:
             raise ValueError('Ring for lattice dimension 2 is not implemented yet.')
