@@ -70,3 +70,12 @@ class Rho:
             current_rho = new_rho
         self.rho_t = current_rho
 
+    def time_evolution(self, kappa, end_time, grain, dt=1, print_status=False):
+        times = [0]
+        states = [self.rho_t]
+        for time in range(dt,int(np.ceil(end_time/dt))):
+            times.append(time)
+            self.update_rho(kappa,grain,dt)
+            states.append(self.rho_t)
+        return states, times
+

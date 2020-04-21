@@ -51,7 +51,7 @@ class Hamiltonian:
             state = np.matmul(self._unitary_matrix(end_time), initial_state)
             return state, end_time
 
-    def full_hamiltonian_matrix(self):
+    def full_hamiltonian(self):
         N = 2**self.dimensions
         full_H = np.zeros([N,N])
         non_zeros = [(2**i) for i in range(self.dimensions)]
@@ -64,6 +64,9 @@ class Hamiltonian:
         full_H = -self.gamma*full_H
         full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] = full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] - 1
         self.H_matrix = full_H
+        full_m_ket = np.zeros(N)
+        full_m_ket[non_zeros[self.dimensions-self.marked]] = 1
+        self.m_ket = full_m_ket
 
     def _hamiltonian_matrix(self):
         if self.ring:
