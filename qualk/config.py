@@ -29,9 +29,10 @@ alpha = 1
 parameters = {
     'chain'                     : chain_form[3],
     'alpha'                     : alpha,
-    'dimensions'                : 1760, # this is the dimensions of the Hamiltonian
+    'kappa'                     : 0.5,
+    'dimensions'                : 9, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 5,
+    'marked_state'              : 1,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
     'init_state'                : 'm', # States: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,
@@ -47,6 +48,14 @@ parameters = {
         'end_time'                  : 100,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
+        'save_plots'                : True
+    },
+
+    'p2_d'                      : {
+        'end_time'                  : 20,
+        'time_step'                 : 0.5,
+        'grain'                     : 50,
+        'optimum_gammaN'            : 2.1057575757575800,
         'save_plots'                : True
     },
 
