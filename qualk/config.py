@@ -22,8 +22,8 @@ alpha = 1
 parameters = {
     'ring'                      : False,
     'alpha'                     : alpha,
-    'kappa'                     : 0.1,
-    'dimensions'                : 3, # this is the dimensions of the Hamiltonian
+    'kappa'                     : 0.5,
+    'dimensions'                : 9, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 1,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
@@ -38,17 +38,17 @@ parameters = {
     },
 
     'p2'                        : {
-        'end_time'                  : 20,
+        'end_time'                  : 100,
         'time_step'                 : 1,
-        'optimum_gammaN'            : 0.5339393939393940,
-        'save_plots'                : False
+        'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
+        'save_plots'                : True
     },
 
     'p2_d'                      : {
         'end_time'                  : 20,
-        'time_step'                 : 1,
-        'grain'                     : 200,
-        'optimum_gammaN'            : 0.5339393939393940,
+        'time_step'                 : 0.5,
+        'grain'                     : 50,
+        'optimum_gammaN'            : 2.1057575757575800,
         'save_plots'                : True
     },
 

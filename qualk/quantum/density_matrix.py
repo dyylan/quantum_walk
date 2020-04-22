@@ -58,7 +58,8 @@ class Rho:
         h = self.hamiltonain.H_matrix
         current_rho = self.rho_t
         steps = grain*time_step
-        for t in range(steps):
+        step = 0
+        while step < steps:
             h_rho = np.matmul(h,current_rho)
             rho_h = np.matmul(current_rho,h)
             new_rho = current_rho - ( 1j/grain )*( h_rho - rho_h )
@@ -68,16 +69,21 @@ class Rho:
                     p_term = p_term + np.matmul(self.projectors_0[i],np.matmul(current_rho,self.projectors_0[i])) + np.matmul(self.projectors_1[i],np.matmul(current_rho,self.projectors_1[i]))
                 new_rho = new_rho - (kappa/grain)*( current_rho - (1/self.n)*p_term )
             current_rho = new_rho
+            step = step + 1
         self.rho_t = current_rho
 
     def time_evolution(self, kappa, end_time, grain, dt=1, print_status=False):
         times = [0]
         states = [self.rho_t]
-        for time in range(dt,int(np.ceil(end_time/dt))):
+        steps = end_time/dt
+        step = 1
+        while step <= steps:
+            time = (step)*dt
             times.append(time)
             self.update_rho(kappa,grain,dt)
             states.append(self.rho_t)
             if print_status:
                 print("time step: " + str(time))
+            step = step + 1
         return states, times
 

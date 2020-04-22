@@ -52,8 +52,8 @@ def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa
     probabilites = np.real(overlaps)
     fig, ax = plt.subplots()
     ax.plot(times, overlaps, linestyle='solid')
-    ax.legend(['$|\langle m| U |s\\rangle|^2$'])
     ax.set(xlabel='$time~(s/\hbar)$')
+    ax.set(ylabel='$|\langle m| U |s\\rangle|^2$')
     ax.grid()
     if save:
         ring_tag = '_ring' if ring else ''
