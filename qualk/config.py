@@ -70,7 +70,7 @@ parameters = {
         'start_dimensions'          : 64,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
-        'end_time'                  : 95, # For ring the timestep can be less
+        'end_time'                  : 80, # For ring the timestep can be less
         'time_step'                 : 1,
         'save_plots'                : True
     },
