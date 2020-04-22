@@ -6,9 +6,9 @@ from ..quantum.ket import Ket
 from ..quantum.density_matrix import Rho
 
 
-def p2_d(dimensions, gamma, alpha, marked, kappa, end_time, time_step, grain, ring, lat_dim, print_status=False):
+def p2_d(dimensions, gamma, alpha, marked, kappa, end_time, time_step, grain, chain, lat_dim, print_status=False):
 
-    H = Hamiltonian(dimensions, gamma, alpha, marked, ring, lat_dim)
+    H = Hamiltonian(dimensions, gamma, alpha, marked, chain, lat_dim)
     H.full_hamiltonian()
     rho = Rho(dimensions,H)
     states, times = rho.time_evolution(kappa, end_time, grain, dt=time_step, print_status=print_status)
@@ -20,7 +20,7 @@ def run():
     p2_d_parameters = parameters['p2_d']
 
     # Parameters
-    ring = parameters['ring']
+    chain = parameters['chain']
     alpha = parameters['alpha']     
     dimensions = parameters['dimensions']
     marked_state = parameters['marked_state']
@@ -36,7 +36,7 @@ def run():
     gamma = optimum_gammaN/dimensions
 
     # State probability over time
-    times, overlaps = p2_d(dimensions, gamma, alpha, marked_state, kappa, end_time, time_step, grain, ring, lattice_dimension, True)
+    times, overlaps = p2_d(dimensions, gamma, alpha, marked_state, kappa, end_time, time_step, grain, chain, lattice_dimension, True)
 
     # Plot
-    p2_d_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, kappa, save_plots, ring, lattice_dimension)
+    p2_d_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, kappa, save_plots, chain, lattice_dimension)

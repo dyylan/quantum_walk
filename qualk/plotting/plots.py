@@ -48,7 +48,7 @@ def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=Fa
     plt.show()
 
 
-def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa, save=False, ring=False, lattice_d=1):
+def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa, save=False, chain='open', lattice_d=1):
     probabilites = np.real(overlaps)
     fig, ax = plt.subplots()
     ax.plot(times, overlaps, linestyle='solid')
@@ -56,8 +56,8 @@ def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa
     ax.set(ylabel='$|\langle m| U |s\\rangle|^2$')
     ax.grid()
     if save:
-        ring_tag = '_ring' if ring else ''
-        plt.savefig(f'plots/p2_d{ring_tag}/alpha={alpha}{save_insert()}_gammaN={gammaN}_m={marked}_lat_dim={lattice_d}_N={dimensions}_k={kappa}.png')
+        chain_tag = '_' + chain
+        plt.savefig(f'plots/p2_d{chain_tag}/alpha={alpha}{save_insert()}_gammaN={gammaN}_m={marked}_lat_dim={lattice_d}_N={dimensions}_k={kappa}.png')
     plt.show()
 
 
