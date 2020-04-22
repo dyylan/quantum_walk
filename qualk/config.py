@@ -38,17 +38,17 @@ parameters = {
     },
 
     'p2'                        : {
-        'end_time'                  : 200,
+        'end_time'                  : 20,
         'time_step'                 : 1,
-        'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
-        'save_plots'                : True
+        'optimum_gammaN'            : 0.5339393939393940,
+        'save_plots'                : False
     },
 
     'p2_d'                      : {
-        'end_time'                  : 50,
-        'time_step'                 : 0.5,
-        'grain'                     : 100,
-        'optimum_gammaN'            : 1,
+        'end_time'                  : 20,
+        'time_step'                 : 1,
+        'grain'                     : 200,
+        'optimum_gammaN'            : 0.5339393939393940,
         'save_plots'                : True
     },
 

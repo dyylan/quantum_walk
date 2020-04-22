@@ -57,12 +57,7 @@ class Hamiltonian:
         non_zeros = [(2**i) for i in range(self.dimensions)]
         for i,k in enumerate(non_zeros):
             for j,l in enumerate(non_zeros):
-                if j != i:
-                    full_H[k][l] = self.H_matrix[self.dimensions-(i+1)][self.dimensions-(j+1)]
-        for i in range(N):
-            full_H[i][i] = 1
-        full_H = -self.gamma*full_H
-        full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] = full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] - 1
+                full_H[k][l] = self.H_matrix[self.dimensions-(i+1)][self.dimensions-(j+1)]
         self.H_matrix = full_H
         full_marked = non_zeros[self.dimensions-self.marked]+1
         self._m_ket =  Ket(N, 'm',full_marked)

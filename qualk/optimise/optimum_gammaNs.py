@@ -4,16 +4,16 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'ring'                : True,
+    'ring'                : False,
     'lattice_dimensions'  : 1,
-    'start_dimensions'    : 64,
-    'end_dimensions'      : 1760,
-    'step_dimensions'     : 32,
-    'marked_state'        : 64,                     
+    'start_dimensions'    : 3,
+    'end_dimensions'      : 10,
+    'step_dimensions'     : 1,
+    'marked_state'        : 1,                     
     'alpha'               : 1,
-    'start_gammaN'        : 4, 
-    'end_gammaN'          : 114,
-    'number_of_points'    : 110,
+    'start_gammaN'        : 0.01, 
+    'end_gammaN'          : 4,
+    'number_of_points'    : 100,
 }
 
 

@@ -61,11 +61,11 @@ class Rho:
         for t in range(steps):
             h_rho = np.matmul(h,current_rho)
             rho_h = np.matmul(current_rho,h)
-            new_rho = current_rho- ( 1j/grain )*( h_rho - rho_h )
+            new_rho = current_rho - ( 1j/grain )*( h_rho - rho_h )
             if kappa != 0:
-                p_term = self.projectors_0[0].dot(current_rho.dot(self.projectors_0[0])) + self.projectors_1[0].dot(current_rho.dot(self.projectors_1[0]))
-                for i in range(1,n):
-                    p_term = p_term + self.projectors_0[i].dot(current_rho.dot(self.projectors_0[i])) + self.projectors_1[i].dot(current_rho.dot(self.projectors_1[i]))
+                p_term = np.matmul(self.projectors_0[0],np.matmul(current_rho,self.projectors_0[0])) + np.matmul(self.projectors_1[0],np.matmul(current_rho,self.projectors_1[0]))
+                for i in range(1,self.n):
+                    p_term = p_term + np.matmul(self.projectors_0[i],np.matmul(current_rho,self.projectors_0[i])) + np.matmul(self.projectors_1[i],np.matmul(current_rho,self.projectors_1[i]))
                 new_rho = new_rho - (kappa/grain)*( current_rho - (1/self.n)*p_term )
             current_rho = new_rho
         self.rho_t = current_rho
