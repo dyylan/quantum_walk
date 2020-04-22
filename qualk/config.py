@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 optimum_gammaN = {
     1 : {
         0   : 1.0,
-        1   : 69.40946158836066,  # for 1024 dimensions with ring
-        2   : 172.8793103448276, # for 256 dimensions with chord
+        1   : 118.07575757575758,  # for 1024 dimensions with ring
+        2   : 118.07575757575758, # for 1760 dimensions with chord
         3   : 1374.966 # for 256 dimensions with ring 
     },
     2 : {
@@ -24,12 +24,12 @@ chain_form = {
 }
 
 lat_d = 1
-alpha = 2
+alpha = 1
 
 parameters = {
     'chain'                     : chain_form[3],
     'alpha'                     : alpha,
-    'dimensions'                : 256, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 1760, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 5,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
@@ -44,7 +44,7 @@ parameters = {
     },
 
     'p2'                        : {
-        'end_time'                  : 400,
+        'end_time'                  : 100,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
         'save_plots'                : True
@@ -58,10 +58,10 @@ parameters = {
     },
 
     'p4'                        : {
-        'start_dimensions'          : 64,
+        'start_dimensions'          : 1760,
         'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
-        'end_time'                  : 95, # For ring the timestep can be less
+        'end_time'                  : 80, # For ring the timestep can be less
         'time_step'                 : 1,
         'save_plots'                : True
     },
