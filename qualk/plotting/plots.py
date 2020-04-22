@@ -50,8 +50,10 @@ def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=Fa
 
 def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa, save=False, ring=False, lattice_d=1):
     probabilites = np.real(overlaps)
+    for t in times:
+        print("At time = " + str(t) + " p = " + str(probabilites[t]))
     fig, ax = plt.subplots()
-    ax.plot(times, probabilites, linestyle='solid')
+    ax.plot(times, overlaps, linestyle='solid')
     ax.legend(['$|\langle m| U |s\\rangle|^2$'])
     ax.set(xlabel='$time~(s/\hbar)$')
     ax.grid()

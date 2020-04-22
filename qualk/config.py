@@ -20,12 +20,12 @@ lat_d = 1
 alpha = 1
 
 parameters = {
-    'ring'                      : True,
+    'ring'                      : False,
     'alpha'                     : alpha,
     'kappa'                     : 0,
-    'dimensions'                : 1760, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 3, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 50,
+    'marked_state'              : 1,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
     'init_state'                : '', # TODO: implement for all states: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,
@@ -41,6 +41,14 @@ parameters = {
         'end_time'                  : 200,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
+        'save_plots'                : True
+    },
+
+    'p2_d'                      : {
+        'end_time'                  : 50,
+        'time_step'                 : 0.5,
+        'grain'                     : 100,
+        'optimum_gammaN'            : 1,
         'save_plots'                : True
     },
 

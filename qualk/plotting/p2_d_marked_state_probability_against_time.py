@@ -1,17 +1,19 @@
 import numpy as np
-from .plots import p2_overlaps_plot
+from .plots import p2_d_overlaps_plot
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 from ..quantum.ket import Ket
-from ..quantum.density_matrix imprt Rho
+from ..quantum.density_matrix import Rho
 
 
 def p2_d(dimensions, gamma, alpha, marked, kappa, end_time, time_step, grain, ring, lat_dim, print_status=False):
+
     H = Hamiltonian(dimensions, gamma, alpha, marked, ring, lat_dim)
     H.full_hamiltonian()
-    rho = Rho(2**dimensions,H)
+    rho = Rho(dimensions,H)
+    print("made rho")
     states, times = rho.time_evolution(kappa, end_time, grain, dt=time_step, print_status=print_status)
-    overlaps = [np.inner(H.m_ket,np.matmul(stae,H.m_ket)) for state in states]
+    overlaps = [np.inner(H._m_ket.ket,np.matmul(state,H._m_ket.ket)) for state in states]
     return times, overlaps
 
 
@@ -35,7 +37,7 @@ def run():
     gamma = optimum_gammaN/dimensions
 
     # State probability over time
-    times, overlaps = p2(dimensions, gamma, alpha, marked_state, kappa, end_time, time_step, grain, ring, lattice_dimension, True)
+    times, overlaps = p2_d(dimensions, gamma, alpha, marked_state, kappa, end_time, time_step, grain, ring, lattice_dimension, True)
 
     # Plot
     p2_d_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, kappa, save_plots, ring, lattice_dimension)

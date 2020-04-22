@@ -17,8 +17,8 @@ class Rho:
         self.projectors_1 = self._get_projectors_1()
 
     def _initial_rho(self):
-        s_ket = Ket(self.dimensions, 's')
-        return np.outer(s_ket.ket, s_ket.ket)
+        s_ket = self.hamiltonain._s_ket.ket
+        return np.outer(s_ket, s_ket)
 
     def _get_projectors_0(self):
         projectors = []
@@ -77,5 +77,7 @@ class Rho:
             times.append(time)
             self.update_rho(kappa,grain,dt)
             states.append(self.rho_t)
+            if print_status:
+                print("time step: " + str(time))
         return states, times
 

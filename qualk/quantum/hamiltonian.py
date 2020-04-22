@@ -64,9 +64,10 @@ class Hamiltonian:
         full_H = -self.gamma*full_H
         full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] = full_H[non_zeros[self.dimensions-self.marked]][non_zeros[self.dimensions-self.marked]] - 1
         self.H_matrix = full_H
-        full_m_ket = np.zeros(N)
-        full_m_ket[non_zeros[self.dimensions-self.marked]] = 1
-        self.m_ket = full_m_ket
+        full_marked = non_zeros[self.dimensions-self.marked]+1
+        self._m_ket =  Ket(N, 'm',full_marked)
+        full_s = (1/np.sqrt(self.dimensions))*np.array([1 if i in non_zeros else 0 for i in range(N)])
+        self._s_ket.ket = full_s
 
     def _hamiltonian_matrix(self):
         if self.ring:
