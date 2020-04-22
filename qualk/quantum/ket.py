@@ -4,7 +4,7 @@ import random
 
 class Ket:
 
-    def __init__(self, dimensions, type='s', marked=1, alpha=0):
+    def __init__(self, dimensions, type='s', marked=1, alpha=1):
         """Creates different types of kets given by a letter."""
         self.dimensions = dimensions
         self.type = type.lower()

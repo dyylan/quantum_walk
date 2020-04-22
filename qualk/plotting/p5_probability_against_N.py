@@ -7,12 +7,12 @@ from ..config import parameters
 from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
 
 
-def p5(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, ring, lat_dim, step_N=1):
+def p5(start_N, end_N, end_time, time_step, opt_gammaNs, alpha, marked, chain, lat_dim, step_N=1):
     dimensions = list(range(start_N, end_N+1, step_N))
     max_probs = []
     for N in dimensions:
         gamma = lookup_gamma(opt_gammaNs, N)
-        _, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step, ring, lat_dim)
+        _, marked_amplitude = p2(N, gamma, alpha, marked, end_time, time_step, chain, lat_dim)
         marked_probability = np.abs(np.multiply(np.conj(marked_amplitude), marked_amplitude))
         peaks, _ = find_peaks(marked_probability, height=(0.5, 1.05))
         max_prob = marked_probability[peaks[0]]
@@ -27,7 +27,7 @@ def run():
 
     # Parameters
     lattice_dimension = parameters['lattice_dimension']
-    ring = parameters['ring']
+    chain = parameters['chain']
     marked_state = parameters['marked_state']
     alpha = parameters['alpha'] 
 
@@ -39,11 +39,11 @@ def run():
     save_plots = p5_parameters['save_plots']
 
     lat_d_tag = '_lat_dim=2' if lattice_dimension==2 else ''
-    ring_tag = '_ring' if ring else ''
-    optimum_gammaNs = f'optimum_gamma/alpha={alpha}{lat_d_tag}{ring_tag}/optimum_gammaNs.csv'
+    chain_tag = '_' + chain
+    optimum_gammaNs = f'optimum_gamma/alpha={alpha}{lat_d_tag}{chain_tag}/optimum_gammaNs.csv'
     optimum_gammaNs = check_optimum_gammaNs_parameter_type(optimum_gammaNs)
 
     # Minimum gaps against dimensions
-    dimensions, max_probs = p5(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, ring, lattice_dimension, step_N)
+    dimensions, max_probs = p5(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, chain, lattice_dimension, step_N)
 
-    p5_probability_against_N_plot(dimensions, max_probs, alpha, optimum_gammaNs, marked_state, save_plots, ring, lattice_dimension)
+    p5_probability_against_N_plot(dimensions, max_probs, alpha, optimum_gammaNs, marked_state, save_plots, chain, lattice_dimension)

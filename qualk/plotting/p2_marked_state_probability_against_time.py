@@ -5,8 +5,8 @@ from ..quantum.hamiltonian import Hamiltonian
 from ..quantum.ket import Ket
 
 
-def p2(dimensions, gamma, alpha, marked, end_time, time_step, ring, lat_dim, print_status=False):
-    H = Hamiltonian(dimensions, gamma, alpha, marked, ring, lat_dim)
+def p2(dimensions, gamma, alpha, marked, end_time, time_step, chain, lat_dim, print_status=False):
+    H = Hamiltonian(dimensions, gamma, alpha, marked, chain, lat_dim)
     use_init_state = parameters['use_init_state']
     init_state = parameters['init_state']
     initial_state = init_state if use_init_state else 's'
@@ -19,7 +19,7 @@ def run():
     p2_parameters = parameters['p2']
 
     # Parameters
-    ring = parameters['ring']
+    chain = parameters['chain']
     alpha = parameters['alpha']     
     dimensions = parameters['dimensions']
     marked_state = parameters['marked_state']
@@ -33,7 +33,7 @@ def run():
     gamma = optimum_gammaN/dimensions
 
     # State probability over time
-    times, overlaps = p2(dimensions, gamma, alpha, marked_state, end_time, time_step, ring, lattice_dimension, True)
+    times, overlaps = p2(dimensions, gamma, alpha, marked_state, end_time, time_step, chain, lattice_dimension, True)
 
     # Plot
-    p2_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, save_plots, ring, lattice_dimension)
+    p2_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, save_plots, chain, lattice_dimension)

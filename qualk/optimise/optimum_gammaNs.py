@@ -4,25 +4,25 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'ring'                : False,
+    'chain'               : 'chord',
     'lattice_dimensions'  : 1,
-    'start_dimensions'    : 3,
-    'end_dimensions'      : 10,
-    'step_dimensions'     : 1,
-    'marked_state'        : 1,                     
-    'alpha'               : 1,
-    'start_gammaN'        : 0.01, 
-    'end_gammaN'          : 4,
-    'number_of_points'    : 100,
+    'start_dimensions'    : 256,
+    'end_dimensions'      : 256,
+    'step_dimensions'     : 32,
+    'marked_state'        : 64,
+    'alpha'               : 2,
+    'start_gammaN'        : 172.5,
+    'end_gammaN'          : 173,
+    'number_of_points'    : 30
 }
 
 
-def optimum_gammaN(lattice_d, ring, dimensions, start_gammaN, end_gammaN, mark, alpha, number_of_points):
+def optimum_gammaN(lattice_d, chain, dimensions, start_gammaN, end_gammaN, mark, alpha, number_of_points):
     gammaNs = np.linspace(start_gammaN, end_gammaN, number_of_points)
     e1_minus_e0s = []        
     for gammaN in gammaNs:
         gamma = gammaN/dimensions
-        H = Hamiltonian(dimensions, gamma, alpha, mark, ring, lattice_d)
+        H = Hamiltonian(dimensions, gamma, alpha, mark, chain, lattice_d)
         e1_minus_e0s.append(H.energy_1 - H.energy_0)
     opt_gammaN = gammaNs[np.argmin(e1_minus_e0s)]
     return opt_gammaN
@@ -55,7 +55,7 @@ def is_square(integer):
 
 
 def optimise():
-    ring = parameters['ring']
+    chain = parameters['chain']
     lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
@@ -79,7 +79,7 @@ def optimise():
     start_gammaNs = []
     end_gammaNs = []
     for N in dimensions:
-        opt_gammaN = optimum_gammaN(lattice_d, ring, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
+        opt_gammaN = optimum_gammaN(lattice_d, chain, N, start_gammaN, end_gammaN, marked_state, alpha, number_of_points)
         optimum_gammaNs.append(opt_gammaN)
         start_gammaNs.append(start_gammaN)
         end_gammaNs.append(end_gammaN)
@@ -94,13 +94,13 @@ def optimise():
 
     optimum_gammaNs_df = pd.DataFrame(data=optimum_gammaNs_data)
 
-    ring_tag = '_ring' if ring else ''
-    marked_state_tag = f'_m={marked_state}' if not ring else ''
+    chain_tag = '_' + chain
+    marked_state_tag = f'_m={marked_state}' if not chain else ''
 
     if lattice_d == 1:
-        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{ring_tag}/optimum_gammaNs{marked_state_tag}.csv', index=False)
+        optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}{chain_tag}/optimum_gammaNs{marked_state_tag}.csv', index=False)
     elif lattice_d == 2:
-        if not ring:
+        if chain == 'open':
             optimum_gammaNs_df.to_csv(f'optimum_gamma/alpha={alpha}_lat_dim=2/optimum_gammaNs{marked_state_tag}.csv', index=False)
         else:
             raise ValueError('Ring for lattice dimension 2 is not implemented yet.')

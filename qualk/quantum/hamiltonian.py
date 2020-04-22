@@ -5,11 +5,18 @@ from .ket import Ket
 
 class Hamiltonian:
 
-    def __init__(self, dimensions, gamma, alpha, marked_state, ring=False, lattice_d=1):
+    def __init__(self, dimensions, gamma, alpha, marked_state, chain='open', lattice_d=1):
         """Initialises a hamiltonian with the form of a spatial quantum walk
         with a 1/|i-j|^alpha potential drop-off.
         """
-        self.ring = ring
+        if chain in [1, 'open', 'o']:
+            self._chain = 1
+        elif chain in [2, 'ring', 'r']:
+            self._chain = 2
+        elif chain in [3, 'chord', 'c']:
+            self._chain = 3
+        else:
+            raise ValueError(f'{chain} is not a valid chain specification!')
         self.lattice_d = lattice_d
         self.dimensions = dimensions
         self.gamma = gamma
@@ -20,10 +27,10 @@ class Hamiltonian:
         if lattice_d == 1:
             self.H_matrix = self._hamiltonian_matrix()
         elif lattice_d == 2:
-            if not ring:
+            if self.chain == 1:
                 self.H_matrix = self._2d_hamiltonian_matrix()
             else:
-                raise ValueError('Cannot have a 2d Hamiltonian with a ring yet.')
+                raise ValueError('Cannot have a 2d Hamiltonian with a ring or chord yet.')
         self.eigenvectors, self.eigenvalues = Hamiltonian.eigenvectors_eigenvalues(self.H_matrix)
         self.psi_0, self.psi_1 = self._psi_0_and_psi_1()
         self.energy_0, self.energy_1 = self._energy_0_and_energy_1()
@@ -41,7 +48,7 @@ class Hamiltonian:
         return self._s_ket.ket
     
     def unitary_evolution(self, end_time, dt=None, print_status=False, initial_state='s'):
-        initial_state = self.s_ket if str(initial_state)=='s' else initial_state.ket
+        initial_state = self.s_ket if initial_state=='s' else Ket(self.dimensions, initial_state).ket
         if dt:
             times = [dt*interval for interval in range(int(np.ceil(end_time/dt)))]
             states = [np.matmul(self._unitary_matrix(time, print_status), initial_state)
@@ -65,14 +72,17 @@ class Hamiltonian:
         self._s_ket.ket = full_s
 
     def _hamiltonian_matrix(self):
-        if self.ring:
-            def coef(row, col):
-                return 1/((np.abs(col-row))**(self.alpha)) + 1/((np.abs(self.dimensions-np.abs(col-row)))**(self.alpha))
-        else:
+        if self._chain == 1:
             def coef(row, col):
                 return 1/((np.abs(col-row))**(self.alpha))
-        if self.alpha:                      
-            H = -self.gamma*np.array([[coef(row, col) if col != row else 1 
+        elif self._chain == 2:
+            def coef(row, col):
+                return 1/((np.abs(col-row))**(self.alpha)) + 1/((np.abs(self.dimensions-np.abs(col-row)))**(self.alpha))
+        elif self._chain == 3:
+            def coef(row, col):
+                return np.pi**self.alpha/((self.dimensions*np.abs(np.sin(np.pi*(row-col)/self.dimensions)))**self.alpha)
+        if self.alpha: 
+            H = -self.gamma*np.array([[coef(row, col) if col != row else 1
                                                 for col in range(self.dimensions)] 
                                                     for row in range(self.dimensions)]) 
             H[(self.marked-1, self.marked-1)] = H[(self.marked-1, self.marked-1)] - 1

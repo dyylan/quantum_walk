@@ -6,7 +6,7 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'ring'                : False,
+    'chain'               : 'ring',
     'lattice_dimensions'  : 1,
     'start_dimensions'    : 3,
     'end_dimensions'      : 10,
@@ -19,8 +19,8 @@ parameters = {
 }
 
 
-def optimum_time(lattice_d, ring, dimensions, gamma, start_time, end_time, mark, alpha, number_of_points):
-    H = Hamiltonian(dimensions, gamma, alpha, mark, ring, lattice_d)
+def optimum_time(lattice_d, chain, dimensions, gamma, start_time, end_time, mark, alpha, number_of_points):
+    H = Hamiltonian(dimensions, gamma, alpha, mark, chain, lattice_d)
     times = np.linspace(start_time, end_time, number_of_points)
     fidelities = []        
     for time in times:
@@ -61,7 +61,7 @@ def is_square(integer):
 
 
 def optimise():
-    ring = parameters['ring']
+    chain = parameters['chain']
     lattice_d = parameters['lattice_dimensions']
     start_N = parameters['start_dimensions']
     end_N = parameters['end_dimensions']
@@ -72,8 +72,8 @@ def optimise():
     end_time = parameters['end_time']
     number_of_points = parameters['number_of_points'] 
 
-    ring_tag = '_ring' if ring else ''
-    optimum_gammaNs_file = f'optimum_gamma/alpha={alpha}{ring_tag}/optimum_gammaNs.csv'
+    chain_tag = '_' + chain
+    optimum_gammaNs_file = f'optimum_gamma/alpha={alpha}{chain_tag}/optimum_gammaNs.csv'
     
     optimum_gammaNs = check_optimum_gammaNs_parameter_type(optimum_gammaNs_file)
     
@@ -92,7 +92,7 @@ def optimise():
     max_fidelities = []
     for N in dimensions:
         gamma = lookup_gamma(optimum_gammaNs, N)
-        opt_time, max_fidelity = optimum_time(lattice_d, ring, N, gamma, start_time, end_time, marked_state, alpha, number_of_points)
+        opt_time, max_fidelity = optimum_time(lattice_d, chain, N, gamma, start_time, end_time, marked_state, alpha, number_of_points)
         optimum_times.append(opt_time)
         max_fidelities.append(max_fidelity)
         start_times.append(start_time)
@@ -110,9 +110,9 @@ def optimise():
     optimum_times_df = pd.DataFrame(data=optimum_times_data)
 
     if lattice_d == 1:
-        optimum_times_df.to_csv(f'optimum_time/alpha={alpha}{ring_tag}/optimum_times_m={marked_state}.csv', index=False)
+        optimum_times_df.to_csv(f'optimum_time/alpha={alpha}{chain_tag}/optimum_times_m={marked_state}.csv', index=False)
     elif lattice_d == 2:
-        if not ring:
+        if chain == 'open':
             optimum_times_df.to_csv(f'optimum_time/alpha={alpha}_lat_dim=2/optimum_times_m={marked_state}.csv', index=False)
         else:
             raise ValueError('Ring for lattice dimension 2 is not implemented yet.')
