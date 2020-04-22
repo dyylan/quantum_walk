@@ -23,7 +23,7 @@ class Rho:
     def _get_projectors_0(self):
         projectors = []
         ket_0 = np.array([1, 0])
-        identity = np.matrix('1 0; 0 1')
+        identity = np.array([[1,0],[0,1]])
         for i in range(self.n):
             if i == 0:
                 proj = np.outer(ket_0,ket_0)
@@ -40,7 +40,7 @@ class Rho:
     def _get_projectors_1(self):
         projectors = []
         ket_1 = np.array([0, 1])
-        identity = np.matrix('1 0; 0 1')
+        identity = np.array([[1,0],[0,1]])
         for i in range(self.n):
             if i == 0:
                 proj = np.outer(ket_1,ket_1)
@@ -63,7 +63,7 @@ class Rho:
             rho_h = np.matmul(current_rho,h)
             new_rho = current_rho - ( 1j/grain )*( h_rho - rho_h )
             if kappa != 0:
-                p_term = np.matmul(self.projectors_0[0],np.matmul(current_rho,self.projectors_0[0])) + np.matmul(self.projectors_1[0],np.matmul(current_rho,self.projectors_1[0]))
+                p_term = np.dot(self.projectors_0[0],np.matmul(current_rho,self.projectors_0[0])) + np.matmul(self.projectors_1[0],np.matmul(current_rho,self.projectors_1[0]))
                 for i in range(1,self.n):
                     p_term = p_term + np.matmul(self.projectors_0[i],np.matmul(current_rho,self.projectors_0[i])) + np.matmul(self.projectors_1[i],np.matmul(current_rho,self.projectors_1[i]))
                 new_rho = new_rho - (kappa/grain)*( current_rho - (1/self.n)*p_term )

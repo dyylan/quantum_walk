@@ -13,9 +13,6 @@ def p2_d(dimensions, gamma, alpha, marked, kappa, end_time, time_step, grain, ri
     rho = Rho(dimensions,H)
     states, times = rho.time_evolution(kappa, end_time, grain, dt=time_step, print_status=print_status)
     overlaps = [np.inner(H._m_ket.ket,np.matmul(state,H._m_ket.ket)) for state in states]
-    for state in states:
-        print(state)
-        print("")
     return times, overlaps
 
 
