@@ -1,5 +1,6 @@
 import numpy as np
-from .plots import p1_amplitudes_plot
+import pandas as pd
+from .plots import p1_amplitudes_plot, save_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 
@@ -47,3 +48,17 @@ def run():
 
     # Plot
     p1_amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0s, save_plots, chain, lattice_dimension)
+
+    # CSV
+    if save_plots:
+        p1_data = {
+            'gammaNs'               : gammasN,
+            'm_psi_0'               : amps[0],
+            'm_psi_1'               : amps[1],
+            's_psi_0'               : amps[2],
+            's_psi_1'               : amps[3],
+            'e1_minus_e0s'          : e1_minus_e0s
+        }
+        p1_df = pd.DataFrame(data=p1_data)
+        
+        p1_df.to_csv(f'data/p1_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)

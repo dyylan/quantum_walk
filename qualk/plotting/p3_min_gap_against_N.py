@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from .plots import p3_min_gap_against_N_plot
+import pandas as pd
+from .plots import p3_min_gap_against_N_plot, save_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
@@ -43,3 +44,13 @@ def run():
 
     # Plot
     p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, optimum_gammaNs, save_plots, chain)
+
+    # CSV
+    if save_plots:
+        p3_data = {
+            'dimensions'                : dimensions,
+            'min_gaps'                  : min_gaps
+        }
+        p3_df = pd.DataFrame(data=p3_data)
+        
+        p3_df.to_csv(f'data/p3_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)

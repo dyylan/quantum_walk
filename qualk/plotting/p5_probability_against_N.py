@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy.signal import find_peaks
 from .p2_marked_state_probability_against_time import p2
-from .plots import p5_probability_against_N_plot
+from .plots import p5_probability_against_N_plot, save_insert
 from ..config import parameters
 from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
 
@@ -47,3 +47,14 @@ def run():
     dimensions, max_probs = p5(start_N, end_N, end_time, time_step, optimum_gammaNs, alpha, marked_state, chain, lattice_dimension, step_N)
 
     p5_probability_against_N_plot(dimensions, max_probs, alpha, optimum_gammaNs, marked_state, save_plots, chain, lattice_dimension)
+
+
+    # CSV
+    if save_plots:
+        p5_data = {
+            'dimensions'                : dimensions,
+            'max_probs'                 : max_probs
+        }
+        p5_df = pd.DataFrame(data=p5_data)
+
+        p5_df.to_csv(f'data/p5_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)
