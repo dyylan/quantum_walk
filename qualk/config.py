@@ -30,7 +30,7 @@ parameters = {
     'chain'                     : chain_form[3],
     'alpha'                     : alpha,
     'kappa'                     : 0.5,
-    'dimensions'                : 5, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 9, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 1,
     'save_tag'                  : '', # Adds an additional message to the saved plot filename
