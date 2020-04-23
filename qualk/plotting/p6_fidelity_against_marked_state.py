@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from .plots import p6_fidelity_against_marked_state
+from .plots import p6_fidelity_against_marked_state, save_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 from ..optimise.optimum_gammaNs import check_optimum_gammaNs_parameter_type, lookup_gamma
@@ -43,3 +43,12 @@ def run():
 
     p6_fidelity_against_marked_state(marked_states, fidelities, alpha, time, dimensions, gammaN, save_plots, chain, lattice_dimension)
 
+    # CSV
+    if save_plots:
+        p6_data = {
+            'marked_states'            : marked_states,
+            'fidelities'               : fidelities
+        }
+        p6_df = pd.DataFrame(data=p6_data)
+        
+        p6_df.to_csv(f'data/p6_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)

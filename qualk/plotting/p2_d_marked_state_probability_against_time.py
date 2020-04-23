@@ -1,5 +1,6 @@
 import numpy as np
-from .plots import p2_d_overlaps_plot
+import pandas as pd
+from .plots import p2_d_overlaps_plot, save_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 from ..quantum.ket import Ket
@@ -40,3 +41,13 @@ def run():
 
     # Plot
     p2_d_overlaps_plot(times, overlaps, alpha, optimum_gammaN, dimensions, marked_state, kappa, save_plots, chain, lattice_dimension)
+
+    # CSV
+    if save_plots:
+        p2_data = {
+            'times'                 : times,
+            'overlaps'              : np.real(overlaps)
+        }
+        p2_df = pd.DataFrame(data=p2_data)
+        
+        p2_df.to_csv(f'data/p2_d_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)
