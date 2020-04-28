@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 optimum_gammaN = {
     1 : {
         0   : 1.0,
-        1   : 118.07575757575758,  # for 1024 dimensions with ring
+        1   : 21.272124918913907,  # for 256 dimensions with ring
         2   : 118.07575757575758, # for 1760 dimensions with chord
         3   : 1374.966 # for 256 dimensions with ring 
     },
@@ -27,16 +27,17 @@ lat_d = 1
 alpha = 1
 
 parameters = {
-    'chain'                     : chain_form[1],
+    'chain'                     : chain_form[2],
     'alpha'                     : alpha,
     'kappa'                     : 0.5,
-    'dimensions'                : 8, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 256, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 1,
-    'save_tag'                  : '', # Adds an additional message to the saved plot filename
-    'init_state'                : 'm', # States: 'm', 'a', 's', 'sq', 'b'
-    'use_init_state'            : False,
-
+    'marked_state'              : 50,
+    'save_tag'                  : '',#'anti_s_init', # Adds an additional message to the saved plot filename
+    'init_state'                : 'anti_s', # States: 'm', 'a', 's', 'sq', 'b'
+    'use_init_state'            : False,        
+    'noise'                     : 0.01,  # Simple decoherence procedure
+    'samples'                   : 10,  # Number of samples for the noise calculation
     'p1'                        : {
         'start_gammaN'              : 1, 
         'end_gammaN'                : 400,
@@ -48,7 +49,8 @@ parameters = {
         'end_time'                  : 100,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
-        'save_plots'                : True
+        'save_plots'                : True,
+
     },
 
     'p2_d'                      : {
@@ -85,7 +87,7 @@ parameters = {
     },
 
     'p6'                        : {
-        'time'                      : 43.0,
+        'time'                      : 25.0,
         'save_plots'                : True         
     }
 }

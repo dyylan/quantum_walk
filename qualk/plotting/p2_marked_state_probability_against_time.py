@@ -1,13 +1,15 @@
 import numpy as np
 import pandas as pd
-from .plots import p2_overlaps_plot, save_insert
+from .plots import p2_overlaps_plot, save_insert, noise_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 from ..quantum.ket import Ket
 
 
 def p2(dimensions, gamma, alpha, marked, end_time, time_step, chain, lat_dim, print_status=False):
-    H = Hamiltonian(dimensions, gamma, alpha, marked, chain, lat_dim)
+    noise = parameters['noise']
+    samples = parameters['samples']
+    H = Hamiltonian(dimensions, gamma, alpha, marked, chain, lat_dim, noise, samples)
     use_init_state = parameters['use_init_state']
     init_state = parameters['init_state']
     initial_state = init_state if use_init_state else 's'
@@ -41,11 +43,16 @@ def run():
 
     # CSV
     if save_plots:
+        norm_overlaps = np.abs(np.multiply(np.conj(overlaps), overlaps))
+        real_overlaps = np.real(overlaps)
+        imag_overlaps = np.imag(overlaps)
         p2_data = {
             'times'                 : times,
-            'overlaps'              : overlaps
+            'norm_overlaps'         : norm_overlaps,
+            'real_overlaps'         : real_overlaps,
+            'imag_overlaps'         : imag_overlaps
         }
         p2_df = pd.DataFrame(data=p2_data)
         
-        p2_df.to_csv(f'data/p2_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)
+        p2_df.to_csv(f'data/p2_{chain}/alpha={alpha}{save_insert()}{noise_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)
 

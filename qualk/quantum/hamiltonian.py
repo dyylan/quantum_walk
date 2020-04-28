@@ -5,7 +5,7 @@ from .ket import Ket
 
 class Hamiltonian:
 
-    def __init__(self, dimensions, gamma, alpha, marked_state, chain='open', lattice_d=1):
+    def __init__(self, dimensions, gamma, alpha, marked_state, chain='open', lattice_d=1, noise=0, samples=1):
         """Initialises a hamiltonian with the form of a spatial quantum walk
         with a 1/|i-j|^alpha potential drop-off.
         """
@@ -22,6 +22,8 @@ class Hamiltonian:
         self.gamma = gamma
         self.alpha = alpha
         self.marked = marked_state
+        self.noise = noise
+        self.samples = samples
         self._m_ket = Ket(dimensions, 'm', marked_state)
         self._s_ket = Ket(dimensions, 's')
         if lattice_d == 1:
@@ -48,14 +50,25 @@ class Hamiltonian:
         return self._s_ket.ket
     
     def unitary_evolution(self, end_time, dt=None, print_status=False, initial_state='s'):
-        initial_state = self.s_ket if initial_state=='s' else Ket(self.dimensions, initial_state).ket
+        initial_state = self.s_ket if initial_state=='s' else Ket(self.dimensions, type=initial_state).ket
+        self._current_states = [initial_state for _ in range(self.samples)]
+        self._H_noises = [self.H_matrix + self.gamma*np.diag(np.random.normal(0, self.noise, self.dimensions)) for _ in range(self.samples)]
+        use_current_state = True
+        if use_current_state:
+            def state_ev(time, samp):
+                self._current_states[samp] = np.matmul(self._unitary_dt_matrix(time, samp, print_status), self._current_states[samp])
+                return self._current_states[samp]
+        else:
+            def state_ev(time, samp):
+                return np.matmul(self._unitary_matrix(time, print_status), initial_state)
         if dt:
+            self._time_count = 0
             times = [dt*interval for interval in range(int(np.ceil(end_time/dt)))]
-            states = [np.matmul(self._unitary_matrix(time, print_status), initial_state)
-                                                                for time in times]
-            return states, times 
-        else: 
-            state = np.matmul(self._unitary_matrix(end_time), initial_state)
+            states = (1/self.samples)*np.sum([[state_ev(dt, samp) for samp in range(self.samples)]
+                                                                            for time in times], axis=1)
+            return states, times
+        else:
+            state = state_ev(end_time)
             return state, end_time
 
     def full_hamiltonian(self):
@@ -104,6 +117,17 @@ class Hamiltonian:
         if print_status:
             print(f'Computing unitary evolution at time: {time}')
         return scipy.linalg.expm(-1j*self.H_matrix*time)
+
+    def _unitary_dt_matrix(self, dt, sample, print_status=False):
+        self._time_count += dt
+        time_step = int(np.floor(self._time_count / self.samples))
+        if print_status:
+            print(f'Computing unitary evolution of time step: {time_step} for sample {sample}')
+        if self.noise:
+            H = self._H_noises[sample]
+        else:
+            H = self.H_matrix
+        return scipy.linalg.expm(-1j*H*dt)
 
     def _psi_0_and_psi_1(self):
         return self.eigenvectors[:,0], self.eigenvectors[:,1]

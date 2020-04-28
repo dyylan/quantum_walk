@@ -1,11 +1,13 @@
 import numpy as np
 import pandas as pd
-from .plots import p1_amplitudes_plot, save_insert
+from .plots import p1_amplitudes_plot, save_insert, noise_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
 
 
 def p1(dimensions, mark, start_gamma, end_gamma, alpha, chain, number_of_points, lattice_dimension):
+    noise = parameters['noise']
+    samples = parameters['samples']
     gammas = np.linspace(start_gamma, end_gamma, number_of_points)
     m_psi_0s = []
     s_psi_0s = []
@@ -61,4 +63,4 @@ def run():
         }
         p1_df = pd.DataFrame(data=p1_data)
         
-        p1_df.to_csv(f'data/p1_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)
+        p1_df.to_csv(f'data/p1_{chain}/alpha={alpha}{save_insert()}_{noise_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)

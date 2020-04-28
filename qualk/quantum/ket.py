@@ -4,7 +4,7 @@ import random
 
 class Ket:
 
-    def __init__(self, dimensions, type='s', marked=1, alpha=1):
+    def __init__(self, dimensions, type='s', marked=1, alpha=1, jth=2, j_list=[2]):
         """Creates different types of kets given by a letter."""
         self.dimensions = dimensions
         self.type = type.lower()
@@ -13,6 +13,16 @@ class Ket:
             self.marked = marked
         elif self.type == 's':
             self.ket = Ket.superposition_state(dimensions)
+        elif self.type == 'anti_s':
+            self.ket = Ket.anti_superposition_state(dimensions)
+        elif self.type == 'f':
+            self.ket = Ket.fourier_state(dimensions, jth)
+        elif self.type == 'fs':
+            self.ket = Ket.fourier_superposition_state(dimensions, j_list)
+        elif self.type == 'cos':
+            self.ket = Ket.cosine_state(dimensions, jth)
+        elif self.type == 'coss':
+            self.ket = Ket.cosine_superposition_state(dimensions, j_list)
         elif self.type == 'a':
             self.ket = Ket.a_state(dimensions, alpha)
         elif self.type == 'b':
@@ -32,6 +42,26 @@ class Ket:
     @staticmethod
     def superposition_state(N):
         return (1/np.sqrt(N))*np.array([1 for _ in range(N)])
+
+    @staticmethod
+    def anti_superposition_state(N):
+        return (1/np.sqrt((N-1)*N))*np.array([np.sum([np.exp(1j*2*np.pi*(jth-1)*i/N) for jth in range(1,N,1)]) for i in range(N)])
+
+    @staticmethod
+    def fourier_state(N, jth):
+        return (1/np.sqrt(N))*np.array([np.exp(1j*2*np.pi*(jth-1)*i/N) for i in range(N)])
+
+    @staticmethod
+    def fourier_superposition_state(N, j_list):
+        return (1/np.sqrt(len(j_list)*N))*np.array([np.sum([np.exp(1j*2*np.pi*(jth-1)*i/N) for jth in j_list]) for i in range(N)])
+
+    @staticmethod
+    def cosine_state(N, jth):
+        return (1/np.sqrt(N))*np.array([np.cos((np.pi/(2*N))*(jth-1)*(2*i-1)) for i in range(N)])
+
+    @staticmethod
+    def cosine_superposition_state(N, j_list):
+        return (1/np.sqrt(len(j_list)*N))*np.array([np.sum([np.cos((np.pi/(2*N))*(jth-1)*(2*i-1)) for jth in j_list]) for i in range(N)])
 
     @staticmethod
     def a_state(N, alpha):

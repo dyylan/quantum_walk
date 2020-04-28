@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from scipy.signal import find_peaks 
 from .p2_marked_state_probability_against_time import p2
-from .plots import p4_time_against_N_plot, save_insert
+from .plots import p4_time_against_N_plot, save_insert, noise_insert
 from ..config import parameters
 from ..optimise.optimum_gammaNs import read_optimum_gammaNs, lookup_gamma, check_optimum_gammaNs_parameter_type
 
@@ -56,4 +56,4 @@ def run():
         }
         p4_df = pd.DataFrame(data=p4_data)
 
-        p4_df.to_csv(f'data/p4_{chain}/alpha={alpha}{save_insert()}_lat_dim={lattice_dimension}_dim={dimensions}.csv', index=False)
+        p4_df.to_csv(f'data/p4_{chain}/alpha={alpha}_lat_dim={lattice_dimension}_{save_insert()}{noise_insert()}.csv', index=False)
