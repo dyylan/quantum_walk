@@ -5,13 +5,13 @@ from ..quantum.hamiltonian import Hamiltonian
 
 
 parameters = {
-    'chain'               : 'chord',
+    'chain'               : 'ring',
     'lattice_dimensions'  : 1,
     'start_dimensions'    : 64,
-    'end_dimensions'      : 1760,
+    'end_dimensions'      : 1024,
     'step_dimensions'     : 32,
-    'marked_state'        : 50,                     
-    'alpha'               : 1,
+    'marked_state'        : 5,                     
+    'alpha'               : 2,
     'gammaN_range'        : 1,
     'number_of_points'    : 100,
 }

@@ -65,7 +65,7 @@ class Hamiltonian:
             self._time_count = 0
             times = [dt*interval for interval in range(int(np.ceil(end_time/dt)))]
             states = (1/self.samples)*np.sum([[state_ev(dt, samp) for samp in range(self.samples)]
-                                                                            for time in times], axis=1)
+                                                for _ in range(int(np.ceil(end_time/dt)))], axis=1)
             return states, times
         else:
             state = state_ev(end_time)

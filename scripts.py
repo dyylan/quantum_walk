@@ -37,7 +37,7 @@ def open_ring_chord_decoherence(dimensions):
  
 def marked_state_amplitudes_against_time_with_noise(dimensions, chain):
     index = 'times'
-    noises = [0.01, 0.05, 0.1, 0.2]
+    noises = [0.01, 0.05, 0.1, 0.2, 0.5]
     noise_files = [f'data/p2_{chain}/alpha=1_noise={noise}_lat_dim=1_dim={dimensions}.csv' 
             for noise in noises]
     noise_data = [pd.read_csv(noise_file, index_col=index) for noise_file in noise_files]
@@ -50,13 +50,11 @@ def marked_state_amplitudes_against_time_with_noise(dimensions, chain):
     ax.set(xlabel='$time~(s/\hbar)$')
     ax.set(ylabel='$|\langle m| U |s\\rangle|^2$')
     ax.grid()
-    plt.savefig(save_directory + f'marked_state_amplitudes_against_time_with_noise_dim={dimensions}_comparison.png')
+    plt.savefig(save_directory + f'{chain}_marked_state_amplitudes_against_time_with_noise_dim={dimensions}_comparison.png')
     plt.show()
-   
-
 
 
 if __name__ == "__main__":
     # open_ring_chord_decoherence(8)
-    marked_state_amplitudes_against_time_with_noise(256, 'ring')
+    marked_state_amplitudes_against_time_with_noise(256, 'chord')
 
