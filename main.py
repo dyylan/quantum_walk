@@ -10,7 +10,7 @@ from qualk.plotting import (p1_eigenstate_amplitudes_against_gammaN,
 
 if __name__ == "__main__":
     optimum_gammaNs.optimise()
-    optimise_optimum_gammaNs.optimise()
+    # optimise_optimum_gammaNs.optimise()
 
     # p1_eigenstate_amplitudes_against_gammaN.run() 
     # p2_marked_state_probability_against_time.run()
