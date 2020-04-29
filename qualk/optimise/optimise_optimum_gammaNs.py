@@ -12,7 +12,7 @@ parameters = {
     'step_dimensions'     : 32,
     'marked_state'        : 5,                     
     'alpha'               : 2,
-    'gammaN_range'        : 1,
+    'gammaN_range'        : 10,
     'number_of_points'    : 100,
 }
 
