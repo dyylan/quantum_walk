@@ -13,7 +13,7 @@ optimum_gammaN = {
         1.4 : 203.66560340244558, # for 1024 dimensions with ring
         1.5 : 254.87956487956495, # for 1024 dimensions with ring
         1.6 : 319.26262626262627, # for 1024 dimensions with ring
-        1.7 : None,
+        1.7 : 402.979797979798,   # for 1024 dimensions with ring
         1.8 : 515.0, # for 1024 dimensions with ring
         1.9 : None, 
         2   : 876.7876438806672, # for 1024 dimensions with ring
@@ -33,7 +33,7 @@ chain_form = {
 }
 
 lat_d = 1
-alpha = 1
+alpha = 1.4
 
 parameters = {
     'show_plots'                : False,
