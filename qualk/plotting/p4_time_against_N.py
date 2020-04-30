@@ -56,4 +56,4 @@ def run():
         }
         p4_df = pd.DataFrame(data=p4_data)
 
-        p4_df.to_csv(f'data/p4_{chain}/alpha={alpha}_lat_dim={lattice_dimension}_{save_insert()}{noise_insert()}.csv', index=False)
+        p4_df.to_csv(f'data/p4_{chain}/alpha={alpha}_lat_dim={lattice_dimension}{save_insert()}{noise_insert()}.csv', index=False)

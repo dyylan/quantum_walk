@@ -54,8 +54,42 @@ def marked_state_amplitudes_against_time_with_noise(dimensions, chain):
     plt.show()
 
 
-def p4_ring_for_various_alpha():
-    
+def p2_various_alpha(dimensions, chain):
+    index = 'times'
+    alphas = [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]
+    alpha_files = [f'data/p2_{chain}/alpha={alpha}_lat_dim=1_dim={dimensions}.csv' 
+                    for alpha in alphas]
+    data = [pd.read_csv(alpha_file, index_col=index) for alpha_file in alpha_files] 
+    times = data[0].index
+    data = [datum[['norm_overlaps']] for datum in data]
+    fig, ax = plt.subplots()
+    for i, y in enumerate(data):
+        ax.plot(times, y)
+    ax.legend([f'alpha = {alpha}' for alpha in alphas])
+    ax.set(xlabel='time$~(s/\hbar)$')
+    ax.set(ylabel='$|\langle m| U |s\\rangle|^2$')
+    ax.grid()
+    plt.savefig(save_directory + f'{chain}_amplitude_against_times_alpha_comparison.png')
+    plt.show()    
+
+
+def p4_various_alpha(chain):
+    index = 'dimensions'
+    alphas = [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]
+    alpha_files = [f'data/p4_{chain}/alpha={alpha}_lat_dim=1.csv' 
+                    for alpha in alphas]
+    data = [pd.read_csv(alpha_file, index_col=index) for alpha_file in alpha_files] 
+    dimensions = data[0].index
+    data = [datum[['opt_times']] for datum in data]
+    fig, ax = plt.subplots()
+    for i, y in enumerate(data):
+        ax.plot(dimensions, y)
+    ax.legend([f'alpha = {alpha}' for alpha in alphas])
+    ax.set(xlabel='$N$')
+    ax.set(ylabel='optimum time$~(s/\hbar)$')
+    ax.grid()
+    plt.savefig(save_directory + f'{chain}_times_against_dimensions_alpha_comparison.png')
+    plt.show()    
 
 
 if __name__ == "__main__":
