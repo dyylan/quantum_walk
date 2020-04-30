@@ -54,6 +54,10 @@ def marked_state_amplitudes_against_time_with_noise(dimensions, chain):
     plt.show()
 
 
+def p4_ring_for_various_alpha():
+    
+
+
 if __name__ == "__main__":
     # open_ring_chord_decoherence(8)
     marked_state_amplitudes_against_time_with_noise(256, 'chord')
