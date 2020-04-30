@@ -11,7 +11,7 @@ parameters = {
     'end_dimensions'      : 1024,
     'step_dimensions'     : 32,
     'marked_state'        : 5,                     
-    'alpha'               : 1.6,
+    'alpha'               : 1.7,
     'gammaN_range'        : 10,
     'number_of_points'    : 100,
 }
