@@ -10,10 +10,10 @@ parameters = {
     'end_dimensions'      : 1024,
     'step_dimensions'     : 32,
     'marked_state'        : 5,
-    'alpha'               : 1.7,
+    'alpha'               : 1.8,
     'start_gammaN'        : 20,
-    'end_gammaN'          : 400,
-    'number_of_points'    : 38
+    'end_gammaN'          : 520,
+    'number_of_points'    : 50
 }
 
 
