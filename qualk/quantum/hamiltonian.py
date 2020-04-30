@@ -122,7 +122,7 @@ class Hamiltonian:
         self._time_count += dt
         time_step = int(np.floor(self._time_count / self.samples))
         if print_status:
-            print(f'Computing unitary evolution of time step: {time_step} for sample {sample}')
+            print(f'Computing unitary evolution of time step: {time_step} for sample {sample+1}')
         if self.noise:
             H = self._H_noises[sample]
         else:

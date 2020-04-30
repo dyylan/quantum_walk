@@ -6,8 +6,17 @@ import matplotlib.pyplot as plt
 optimum_gammaN = {
     1 : {
         0   : 1.0,
-        1   : 23.110389610389603,  # for 256 dimensions with chord 
-        2   : 118.07575757575758, # for 1760 dimensions with chord
+        1   : 69.40946158836066,  # for 1024 dimensions with ring
+        1.1 : 94.94949494949493,  # for 1024 dimensions with ring
+        1.2 : 125.42929292929294, # for 1024 dimensions with ring
+        1.3 : 161.3036616161616,  # for 1024 dimensions with ring
+        1.4 : 203.66560340244558, # for 1024 dimensions with ring
+        1.5 : 254.87956487956495, # for 1024 dimensions with ring
+        1.6 : 319.26262626262627, # for 1024 dimensions with ring
+        1.7 : None,
+        1.8 : 515.0, # for 1024 dimensions with ring
+        1.9 : None, 
+        2   : 876.7876438806672, # for 1024 dimensions with ring
         3   : 1374.966 # for 256 dimensions with ring 
     },
     2 : {
@@ -27,17 +36,18 @@ lat_d = 1
 alpha = 1
 
 parameters = {
-    'chain'                     : chain_form[3],
+    'show_plots'                : False,
+    'chain'                     : chain_form[2],
     'alpha'                     : alpha,
     'kappa'                     : 0.5,
-    'dimensions'                : 256, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 1024, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
     'marked_state'              : 5,
     'save_tag'                  : '',#'anti_s_init', # Adds an additional message to the saved plot filename
     'init_state'                : 'anti_s', # States: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,        
-    'noise'                     : 0.5,  # Simple decoherence procedure
-    'samples'                   : 10,  # Number of samples for the noise calculation
+    'noise'                     : 0,  # Simple decoherence procedure
+    'samples'                   : 1,  # Number of samples for the noise calculation
     'p1'                        : {
         'start_gammaN'              : 1, 
         'end_gammaN'                : 400,
@@ -70,9 +80,9 @@ parameters = {
 
     'p4'                        : {
         'start_dimensions'          : 64,
-        'end_dimensions'            : 1760,
+        'end_dimensions'            : 1024,
         'step_dimensions'           : 32,
-        'end_time'                  : 80, # For ring the timestep can be less
+        'end_time'                  : 160, # For ring the timestep can be less
         'time_step'                 : 1,
         'save_plots'                : True
     },
@@ -91,3 +101,18 @@ parameters = {
         'save_plots'                : True         
     }
 }
+
+
+def update_parameter(parameter_tuple, px=''):
+    key = parameter_tuple[0]
+    value = parameter_tuple[1]
+    if px:
+        parameters[px][key] = value
+        print(f'Updated {key} to {value} in {px}')
+    else:
+        parameters[key] = value
+        print(f'Updated {key} to {value}')
+    
+
+def update_alpha(new_alpha):
+    alpha = new_alpha

@@ -27,7 +27,8 @@ def p1_amplitudes_plot(alpha, dimensions, gammasN, amps, e1_minus_e0, save=False
     if save:
         chain_tag = '_' + chain
         plt.savefig(f'plots/p1{chain_tag}/alpha={alpha}{save_insert()}{noise_insert()}_lat_dim={lattice_d}_dim={dimensions}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
 
 
 def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=False, chain='open', lattice_d=1):
@@ -47,7 +48,8 @@ def p2_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, save=Fa
     if save:
         chain_tag = '_' + chain
         plt.savefig(f'plots/p2{chain_tag}/alpha={alpha}{save_insert()}{noise_insert()}_gammaN={gammaN}_m={marked}_lat_dim={lattice_d}_N={dimensions}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
 
 
 def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa, save=False, chain='open', lattice_d=1):
@@ -60,7 +62,8 @@ def p2_d_overlaps_plot(times, overlaps, alpha, gammaN, dimensions, marked, kappa
     if save:
         chain_tag = '_' + chain
         plt.savefig(f'plots/p2_d{chain_tag}/alpha={alpha}{save_insert()}{noise_insert()}_gammaN={gammaN}_m={marked}_lat_dim={lattice_d}_N={dimensions}_k={kappa}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
 
 
 def p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, gammaN, save=False, chain='open', lattice_d=1):
@@ -90,7 +93,8 @@ def p3_min_gap_against_N_plot(dimensions, min_gaps, alpha, gammaN, save=False, c
         chain_tag = '_' + chain
         lat_d_tag = '_lat_dim=2' if lattice_d==2 else ''
         plt.savefig(f'plots/p3{chain_tag}/min_gaps_alpha={alpha}{lat_d_tag}{save_insert()}{noise_insert()}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
 
 
 def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False, chain='open', lattice_d=1):
@@ -120,7 +124,8 @@ def p4_time_against_N_plot(dimensions, times, alpha, gammaN, save=False, chain='
         chain_tag = '_' + chain
         lat_d_tag = '_lat_dim=2' if lattice_d==2 else ''
         plt.savefig(f'plots/p4{chain_tag}/times_alpha={alpha}{lat_d_tag}{save_insert()}{noise_insert()}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
 
 
 def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, marked, save=False, chain='open', lattice_d=1):
@@ -145,7 +150,8 @@ def p5_probability_against_N_plot(dimensions, probabilities, alpha, gammaN, mark
         chain_tag = '_' + chain
         lat_d_tag = '_lat_dim=2' if lattice_d==2 else ''
         plt.savefig(f'plots/p5{chain_tag}/probs_alpha={alpha}{lat_d_tag}_m={marked}{save_insert()}{noise_insert()}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
 
 
 def p6_fidelity_against_marked_state(marked_states, fidelities, alpha, time, dimensions, gammaN, save=False, chain='open', lattice_d=1):
@@ -170,4 +176,5 @@ def p6_fidelity_against_marked_state(marked_states, fidelities, alpha, time, dim
         chain_tag = '_' + chain
         lat_d_tag = '_lat_dim=2' if lattice_d==2 else ''
         plt.savefig(f'plots/p6{chain_tag}/alpha={alpha}{lat_d_tag}_N={dimensions}_time={time}_gammaN={gammaN}{save_insert()}{noise_insert()}.png')
-    plt.show()
+    if parameters['show_plots']:
+        plt.show()
