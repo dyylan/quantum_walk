@@ -116,3 +116,4 @@ def update_parameter(parameter_tuple, px=''):
 
 def update_alpha(new_alpha):
     alpha = new_alpha
+    print(f'Updated alpha to {new_alpha}')

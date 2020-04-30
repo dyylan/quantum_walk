@@ -26,12 +26,12 @@ if __name__ == "__main__":
 
     from qualk.config import update_alpha
 
-    update_alpha(1.1)
+    update_alpha(1.4)
     p4_time_against_N.run()
 
-    update_alpha(1.2)
+    update_alpha(1.5)
     p4_time_against_N.run()
 
-    update_alpha(1.3)
+    update_alpha(1.6)
     p4_time_against_N.run()
 
