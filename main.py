@@ -13,7 +13,7 @@ if __name__ == "__main__":
     # goptimise_optimum_gammaNs.optimise()
 
     # p1_eigenstate_amplitudes_against_gammaN.run() 
-     p2_marked_state_probability_against_time.run()
+    p2_marked_state_probability_against_time.run()
     # p2_d_marked_state_probability_against_time.run()
     # p3_min_gap_against_N.run()
     # p4_time_against_N.run()
