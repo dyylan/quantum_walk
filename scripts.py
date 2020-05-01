@@ -95,5 +95,6 @@ def p4_various_alpha(chain):
 if __name__ == "__main__":
     # open_ring_chord_decoherence(8)
     # marked_state_amplitudes_against_time_with_noise(256, 'chord')
-    p2_various_alpha(1024, 'ring')
+    # p2_various_alpha(1024, 'ring')
+    p4_various_alpha('ring')
 
