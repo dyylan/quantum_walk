@@ -56,7 +56,7 @@ def marked_state_amplitudes_against_time_with_noise(dimensions, chain):
 
 def p2_various_alpha(dimensions, chain):
     index = 'times'
-    alphas = [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]
+    alphas = [1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6]
     alpha_files = [f'data/p2_{chain}/alpha={alpha}_lat_dim=1_dim={dimensions}.csv' 
                     for alpha in alphas]
     data = [pd.read_csv(alpha_file, index_col=index) for alpha_file in alpha_files] 
@@ -75,7 +75,7 @@ def p2_various_alpha(dimensions, chain):
 
 def p4_various_alpha(chain):
     index = 'dimensions'
-    alphas = [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0]
+    alphas = [1, 1.1, 1.2, 1.3, 1.4]
     alpha_files = [f'data/p4_{chain}/alpha={alpha}_lat_dim=1.csv' 
                     for alpha in alphas]
     data = [pd.read_csv(alpha_file, index_col=index) for alpha_file in alpha_files] 
@@ -94,5 +94,6 @@ def p4_various_alpha(chain):
 
 if __name__ == "__main__":
     # open_ring_chord_decoherence(8)
-    marked_state_amplitudes_against_time_with_noise(256, 'chord')
+    # marked_state_amplitudes_against_time_with_noise(256, 'chord')
+    p2_various_alpha(1024, 'ring')
 

@@ -33,7 +33,7 @@ chain_form = {
 }
 
 lat_d = 1
-alpha = 1
+alpha = 1.4
 
 parameters = {
     'show_plots'                : False,
@@ -56,7 +56,7 @@ parameters = {
     },
 
     'p2'                        : {
-        'end_time'                  : 160,
+        'end_time'                  : 150,
         'time_step'                 : 1,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
         'save_plots'                : True,
