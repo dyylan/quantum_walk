@@ -33,7 +33,7 @@ chain_form = {
 }
 
 lat_d = 1
-alpha = 1.4
+alpha = 1
 
 parameters = {
     'show_plots'                : False,
@@ -82,7 +82,7 @@ parameters = {
         'start_dimensions'          : 64,
         'end_dimensions'            : 1024,
         'step_dimensions'           : 32,
-        'end_time'                  : 160, # For ring the timestep can be less
+        'end_time'                  : 150, # For ring the timestep can be less
         'time_step'                 : 1,
         'save_plots'                : True
     },
