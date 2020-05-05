@@ -13,34 +13,43 @@ if __name__ == "__main__":
     # goptimise_optimum_gammaNs.optimise()
 
     # p1_eigenstate_amplitudes_against_gammaN.run() 
-    # p2_marked_state_probability_against_time.run()
+    p2_marked_state_probability_against_time.run()
     # p2_d_marked_state_probability_against_time.run()
     # p3_min_gap_against_N.run()
-    p4_time_against_N.run()
+    # p4_time_against_N.run()
     # p5_probability_against_N.run()
     # p6_fidelity_against_marked_state.run()
 
     # from qualk.config import update_parameter
 
-    # update_parameter(('end_time', 200), 'p2')
-    
-    from qualk.config import update_alpha
-
-    update_alpha(1.1)
+    # update_parameter(('noise', 0.05))
     # p2_marked_state_probability_against_time.run()
-    p4_time_against_N.run()
 
-    update_alpha(1.2)
+    # update_parameter(('noise', 0.1))
     # p2_marked_state_probability_against_time.run()
-    p4_time_against_N.run()
 
-    update_alpha(1.3)
+    # update_parameter(('noise', 0.2))
     # p2_marked_state_probability_against_time.run()
-    p4_time_against_N.run()
 
-    update_alpha(1.4)
+    # update_parameter(('noise', 10))
     # p2_marked_state_probability_against_time.run()
-    p4_time_against_N.run()
+
+    # from qualk.config import update_alpha
+
+    # update_alpha(1)
+    # p4_time_against_N.run()
+
+    # update_alpha(1.2)
+    # # p2_marked_state_probability_against_time.run()
+    # p4_time_against_N.run()
+
+    # update_alpha(1.3)
+    # # p2_marked_state_probability_against_time.run()
+    # p4_time_against_N.run()
+
+    # update_alpha(1.4)
+    # # p2_marked_state_probability_against_time.run()
+    # p4_time_against_N.run()
 
     # update_alpha(1.5)
     # p2_marked_state_probability_against_time.run()

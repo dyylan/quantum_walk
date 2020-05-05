@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import pandas as pd
 from .plots import p3_min_gap_against_N_plot, save_insert, noise_insert
 from ..config import parameters
 from ..quantum.hamiltonian import Hamiltonian
@@ -51,7 +50,7 @@ def run():
     if save_plots:
         p3_data = {
             'dimensions'                : dimensions,
-            'min_gaps'                  : min_gaps
+            'min_gaps'                  : np.real(min_gaps)
         }
         p3_df = pd.DataFrame(data=p3_data)
         

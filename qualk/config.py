@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 optimum_gammaN = {
     1 : {
         0   : 1.0,
-        1   : 69.40946158836066,  # for 1024 dimensions with ring
+# For dimension of 8: Open: 1.927118644067800, Ring: 1.0135593220339000, Chord: 1.2627118644067800
+        1   : 1.0135593220339000,  # for 8 dimensions with ring
         1.1 : 94.94949494949493,  # for 1024 dimensions with ring
         1.2 : 125.42929292929294, # for 1024 dimensions with ring
         1.3 : 161.3036616161616,  # for 1024 dimensions with ring
@@ -36,18 +37,18 @@ lat_d = 1
 alpha = 1
 
 parameters = {
-    'show_plots'                : False,
+    'show_plots'                : True,
     'chain'                     : chain_form[2],
     'alpha'                     : alpha,
     'kappa'                     : 0.5,
-    'dimensions'                : 1024, # this is the dimensions of the Hamiltonian
+    'dimensions'                : 8, # this is the dimensions of the Hamiltonian
     'lattice_dimension'         : lat_d, # this is the physical lattice dimensions
-    'marked_state'              : 5,
+    'marked_state'              : 2,
     'save_tag'                  : '',#'anti_s_init', # Adds an additional message to the saved plot filename
     'init_state'                : 'anti_s', # States: 'm', 'a', 's', 'sq', 'b'
     'use_init_state'            : False,        
-    'noise'                     : 0,  # Simple decoherence procedure
-    'samples'                   : 1,  # Number of samples for the noise calculation
+    'noise'                     : 0.01,  # Simple decoherence procedure
+    'samples'                   : 100,  # Number of samples for the noise calculation
     'p1'                        : {
         'start_gammaN'              : 1, 
         'end_gammaN'                : 400,
@@ -56,8 +57,8 @@ parameters = {
     },
 
     'p2'                        : {
-        'end_time'                  : 150,
-        'time_step'                 : 1,
+        'end_time'                  : 30,
+        'time_step'                 : 0.2,
         'optimum_gammaN'            : optimum_gammaN[lat_d][alpha],
         'save_plots'                : True,
 
