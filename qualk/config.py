@@ -7,7 +7,7 @@ optimum_gammaN = {
     1 : {
         0   : 1.0,
 # For dimension of 8: Open: 1.927118644067800, Ring: 1.0135593220339000, Chord: 1.2627118644067800
-        1   : 1.0135593220339000,  # for 8 dimensions with ring
+        1   : 1.4,  # for 8 dimensions with ring
         1.1 : 94.94949494949493,  # for 1024 dimensions with ring
         1.2 : 125.42929292929294, # for 1024 dimensions with ring
         1.3 : 161.3036616161616,  # for 1024 dimensions with ring
@@ -37,7 +37,7 @@ lat_d = 1
 alpha = 1
 
 parameters = {
-    'show_plots'                : True,
+    'show_plots'                : False,
     'chain'                     : chain_form[2],
     'alpha'                     : alpha,
     'kappa'                     : 0.5,
@@ -81,9 +81,9 @@ parameters = {
 
     'p4'                        : {
         'start_dimensions'          : 64,
-        'end_dimensions'            : 1024,
+        'end_dimensions'            : 1760,
         'step_dimensions'           : 32,
-        'end_time'                  : 150, # For ring the timestep can be less
+        'end_time'                  : 190, # For ring the timestep can be less
         'time_step'                 : 1,
         'save_plots'                : True
     },

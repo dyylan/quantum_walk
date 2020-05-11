@@ -39,8 +39,8 @@ def open_ring_chord_decoherence(dimensions):
  
 def marked_state_amplitudes_against_time_with_noise(dimensions, chain, end_time):
     index = 'times'
-    noises = [0.01, 0.05, 0.1, 0.2, 0.5, 10]
-    noise_files = [f'data/p2_{chain}/alpha=1_m=2_noise={noise}_lat_dim=1_dim={dimensions}.csv' 
+    noises = [0.01, 0.05, 0.1, 0.2]
+    noise_files = [f'data/p2_{chain}/alpha=1_noise={noise}_lat_dim=1_dim={dimensions}.csv' 
             for noise in noises]
     noise_data = [pd.read_csv(noise_file, index_col=index) for noise_file in noise_files]
     times = noise_data[0][:end_time].index
@@ -94,16 +94,16 @@ def p2_various_m(dimensions, chain):
     plt.show()
 
 
-def p4_various_alpha(chain):
+def p4_various_alpha(chain, logplot=False):
     index = 'dimensions'
     alphas = [1, 1.1, 1.4, 1.5]
     # alphas = [1, 1.1, 1.2, 1.3, 1.4]
     alpha_files = [f'data/p4_{chain}/alpha={alpha}_lat_dim=1.csv' 
                     for alpha in alphas]
     data = [pd.read_csv(alpha_file, index_col=index) for alpha_file in alpha_files] 
+    data = [datum[:31] for datum in data]
     dimensions = data[0].index
-    data = [datum[['opt_times']] for datum in data]
-
+    
     scaling = []
     for i, datum in enumerate(data):    
         popt, pcov = curve_fit(fits.power_fit, dimensions, datum['opt_times'].to_list(), bounds=(0, [10., 1., 0.8]))        
@@ -120,7 +120,10 @@ def p4_various_alpha(chain):
         ax.plot(dimensions, y)
     for y in N_fits:
         ax.plot(dimensions, y, linestyle='dotted')
-    ax.legend([f'$\\alpha = {alpha}$, fit $N^{{ {-1*scaling[i][1]:.4f} }}$' for i, alpha in enumerate(alphas)] + ['$N^{-0.50}$ fit', '$N^{-0.55}$ fit'])
+    ax.legend([f'$\\alpha = {alpha}$, fit $N^{{ {scaling[i][1]:.4f} }}$' for i, alpha in enumerate(alphas)] + ['$N^{0.50}$ fit', '$N^{0.55}$ fit'])
+    if logplot:
+        ax.set(xscale='log')
+        ax.set(yscale='log')        
     ax.set(xlabel='$N$')
     ax.set(ylabel='optimum time$~(s/\hbar)$')
     ax.grid()
@@ -204,12 +207,87 @@ def time_against_N(chain, alpha):
     plt.show()    
 
 
+def time_against_N_log_plot(chain, alpha):
+    index = 'dimensions'
+    alphas = 1
+    alpha_file = f'data/p4_{chain}/alpha={alpha}_lat_dim=1.csv'
+    data = pd.read_csv(alpha_file, index_col=index)
+    dimensions = data.index
+    data = data[['opt_times']]
+
+    popt1, pcov1 = curve_fit(fits.power_fit, dimensions, data['opt_times'].to_list(), bounds=(0, [10., 1., 1.]))
+    print(f'Fit for power gives: y = {popt1[0]} * x^{popt1[1]} + {popt1[2]}')
+
+    sqrt_N_fit = fits.power_fit(dimensions, popt1[0], 0.5, popt1[2])
+
+    six_five_N_fit = fits.power_fit(dimensions, popt1[0], 0.55, popt1[2])
+
+    three_quarters_N_fit = fits.power_fit(dimensions, popt1[0], 0.75, popt1[2])
+
+    popt, pcov = curve_fit(fits.power_fit_over_log, dimensions, data['opt_times'].to_list(), bounds=(0, [10., 1., 10.]))
+    print(f'Fit for power gives: y = {popt[0]} * x^{popt[1]} / log(x)^0.25 + {popt[2]}')
+    power_over_log_fit = fits.power_fit_over_log(dimensions, popt[0], 0.75, popt[2])
+
+    # popt2, pcov2 = curve_fit(fits.power_fit_over_log, dimensions, data['opt_times'].to_list(), bounds=(0, [10., 10.,]))
+    # print(f'Fit for power gives: y = {popt2[0]} * x^0.75 / log(x)^0.25 + {popt2[1]}')
+    # power_over_log_fit = fits.power_fit_over_log(dimensions, popt2[0], popt2[1])
+
+    N_fits = [sqrt_N_fit, six_five_N_fit, three_quarters_N_fit]
+
+    fig, ax = plt.subplots()
+    ax.plot(dimensions, data)
+    for y in N_fits:
+        ax.plot(dimensions, y, linestyle='dotted')
+    ax.legend([f'$\\alpha = {alpha}$'] + ['$N^{0.50}$ fit', '$N^{0.55}$ fit', '$N^{0.75}$ fit'])
+    ax.set(xscale='log')
+    ax.set(yscale='log')
+    ax.set(xlabel='$N$')
+    ax.set(ylabel='optimum time$~(s/\hbar)$')
+    ax.grid()
+    plt.savefig(save_directory + f'{chain}_times_against_dimensions_alpha_comparison_log_plot.png')
+    plt.show()    
+
+
+def time_against_N_log_plot_ring_chord():
+    index = 'dimensions'
+    alphas = 1
+    ring_file = f'data/p4_ring/alpha=1_lat_dim=1.csv'
+    chord_file = f'data/p4_chord/alpha=1_lat_dim=1.csv'
+    ring_data = pd.read_csv(ring_file, index_col=index)
+    chord_data = pd.read_csv(chord_file, index_col=index)
+    dimensions = ring_data.index
+
+    popt1, pcov1 = curve_fit(fits.power_fit, dimensions, ring_data['opt_times'].to_list(), bounds=(0, [10., 1., 1.]))
+    print(f'Fit for power gives: y = {popt1[0]} * x^{popt1[1]} + {popt1[2]}')
+
+    sqrt_N_fit = fits.power_fit(dimensions, popt1[0], 0.5, popt1[2])
+
+    six_five_N_fit = fits.power_fit(dimensions, popt1[0], 0.51, popt1[2])
+
+    N_fits = [sqrt_N_fit, six_five_N_fit]
+
+    fig, ax = plt.subplots()
+    ax.plot(dimensions, ring_data)
+    ax.plot(dimensions, chord_data)
+    for y in N_fits:
+        ax.plot(dimensions, y, linestyle='dotted')
+    ax.legend([f'ring, $\\alpha = 1$', f'chord, $\\alpha = 1$'] + ['$N^{0.50}$ fit', '$N^{0.51}$ fit'])
+    ax.set(xscale='log')
+    ax.set(yscale='log')
+    ax.set(xlabel='$N$')
+    ax.set(ylabel='optimum time$~(s/\hbar)$')
+    ax.grid()
+    plt.savefig(save_directory + f'ring_and_chord_times_against_dimensions_log_plot.png')
+    plt.show()    
+
+
 if __name__ == "__main__":
     # open_ring_chord_decoherence(8)
     marked_state_amplitudes_against_time_with_noise(8, 'ring', 20)
     # p2_various_alpha(1024, 'ring')
     # p2_various_m(1024, 'open')
-    # p4_various_alpha('ring')
+    # p4_various_alpha('ring', True)
     # time_against_N('ring', 1)
     # p3_alpha_0_and_1('open')
-
+    # time_against_N_log_plot('open', 1)
+    # time_against_N_log_plot_ring_chord()

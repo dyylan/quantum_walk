@@ -20,19 +20,19 @@ if __name__ == "__main__":
     # p5_probability_against_N.run()
     # p6_fidelity_against_marked_state.run()
 
-    # from qualk.config import update_parameter
+    from qualk.config import update_parameter
 
-    # update_parameter(('noise', 0.05))
-    # p2_marked_state_probability_against_time.run()
+    update_parameter(('noise', 0.02))
+    p2_marked_state_probability_against_time.run()
 
-    # update_parameter(('noise', 0.1))
-    # p2_marked_state_probability_against_time.run()
+    update_parameter(('noise', 0.05))
+    p2_marked_state_probability_against_time.run()
 
-    # update_parameter(('noise', 0.2))
-    # p2_marked_state_probability_against_time.run()
+    update_parameter(('noise', 0.1))
+    p2_marked_state_probability_against_time.run()
 
-    # update_parameter(('noise', 10))
-    # p2_marked_state_probability_against_time.run()
+    update_parameter(('noise', 0.2))
+    p2_marked_state_probability_against_time.run()
 
     # from qualk.config import update_alpha
 
